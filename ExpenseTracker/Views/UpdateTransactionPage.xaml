@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:ExpenseTracker.ViewModels"
+             xmlns:helper="clr-namespace:ExpenseTracker.Helper"
+             x:Class="ExpenseTracker.Views.UpdateTransactionPage"
+             x:DataType="viewModels:UpdateTransactionViewModel"
+             Title="Update Transaction">
+
+    <StackLayout Padding="20" Spacing="10">
+        <Picker Title="Type"
+                ItemsSource="{x:Static helper:Constants.TransactionTypes}"
+                SelectedItem="{Binding SelectedType}" />
+
+        <Entry Placeholder="Category"
+               Text="{Binding Category}" />
+
+        <Entry Placeholder="Amount"
+               Text="{Binding Amount}"
+               Keyboard="Numeric" />
+
+        <DatePicker Date="{Binding Date}" />
+
+        <Editor Placeholder="Notes"
+                AutoSize="TextChanges"
+                Text="{Binding Notes}" />
+
+        <Button Text="Update"
+                Command="{Binding SaveCommand}" />
+    </StackLayout>
+</ContentPage>

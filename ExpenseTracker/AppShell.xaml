@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<Shell
-    x:Class="ExpenseTracker.AppShell"
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:ExpenseTracker"
-    Shell.FlyoutBehavior="Flyout"
-    Title="ExpenseTracker">
+<Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:views="clr-namespace:ExpenseTracker.Views"
+       x:Class="ExpenseTracker.AppShell"
+       Title="Expense Tracker">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <ShellItem Title="Home" Route="HomePage">
+        <ShellContent ContentTemplate="{DataTemplate views:HomePage}" />
+    </ShellItem>
+
+    <ShellItem Title="Reports" Route="ReportPage">
+        <ShellContent ContentTemplate="{DataTemplate views:ReportPage}" />
+    </ShellItem>
 
 </Shell>

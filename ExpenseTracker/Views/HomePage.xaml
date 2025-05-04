@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ExpenseTracker.Views.HomePage"
+             Title="Dashboard"
+             xmlns:helper="clr-namespace:ExpenseTracker.Helper">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <helper:TypeToColorConverter x:Key="TypeToColorConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <StackLayout Padding="20">
+        <Label Text="Total Expense Balance:" FontSize="24" />
+        <Label FontSize="32" TextColor="Green" Text="{Binding TotalBalance, StringFormat='৳ {0:N2}'}" />
+        <Label Text="Recent Transactions History:" FontSize="15" Margin="0,20,0,10" />
+
+        <CollectionView ItemsSource="{Binding Transactions}" >
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout Orientation="Horizontal" Spacing="10" VerticalOptions="Center">
+                        <Label Text="{Binding Date, StringFormat='{0:MMM dd}'}" WidthRequest="80" VerticalOptions="Center"/>
+                        <Label Text="{Binding Category}" WidthRequest="100" VerticalOptions="Center"/>
+                        <Label Text="{Binding Amount, StringFormat='৳ {0:N2}'}"
+                       TextColor="{Binding Type, Converter={StaticResource TypeToColorConverter}}"
+                       WidthRequest="80"
+                       VerticalOptions="Center"/>
+
+                        <Button Text="✎"
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.UpdateCommand}"
+                        CommandParameter="{Binding}"
+                        WidthRequest="30" HeightRequest="30"
+                        FontSize="12"
+                        Padding="0"
+                        BackgroundColor="LightBlue"
+                        CornerRadius="15"
+                        VerticalOptions="Center" />
+
+                        <Button Text="🗑"
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DeleteCommand}"
+                        CommandParameter="{Binding}"
+                        WidthRequest="30" HeightRequest="30"
+                        FontSize="12"
+                        Padding="0"
+                        BackgroundColor="Red"
+                        TextColor="White"
+                        CornerRadius="15"
+                        VerticalOptions="Center"/>
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+
+        <Button Text="Add Transaction" Clicked="OnAddClicked" Margin="0,20,0,0"/>
+    </StackLayout>
+</ContentPage>
