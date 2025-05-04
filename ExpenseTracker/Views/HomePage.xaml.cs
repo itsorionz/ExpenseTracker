@@ -17,7 +17,11 @@ namespace ExpenseTracker.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            _vm.LoadTransactions();
+
+            if (BindingContext is HomeViewModel vm)
+            {
+                vm.LoadTransactions();
+            }
         }
 
         private async void OnAddClicked(object sender, EventArgs e)

@@ -23,15 +23,15 @@ namespace ExpenseTracker.ViewModels
             transactions = new ObservableCollection<Transaction>();
         }
 
-        public async void LoadTransactions()
+        public async Task LoadTransactions()
         {
             var data = await _db.GetTransactionsAsync();
-            transactions.Clear();
+            Transactions.Clear();
 
             foreach (var t in data.OrderByDescending(t => t.Date))
-                transactions.Add(t);
+                Transactions.Add(t);
 
-            totalBalance = transactions.Sum(t => t.Type == "Income" ? t.Amount : -t.Amount);
+            TotalBalance = Transactions.Sum(t => t.Type == "Income" ? t.Amount : -t.Amount);
         }
 
         [RelayCommand]
@@ -40,7 +40,7 @@ namespace ExpenseTracker.ViewModels
             if (transaction == null) return;
             await _db.DeleteTransactionAsync(transaction);
             transactions.Remove(transaction);
-            totalBalance = transactions.Sum(t => t.Type == "Income" ? t.Amount : -t.Amount);
+            TotalBalance = transactions.Sum(t => t.Type == "Income" ? t.Amount : -t.Amount);
         }
 
         [RelayCommand]

@@ -35,7 +35,11 @@ public partial class AddTransactionViewModel : ObservableObject
             Date = Date,
             Notes = Notes
         };
-        await _db.SaveTransactionAsync(transaction);
-        await Shell.Current.GoToAsync("///HomePage", true);
+        if (transaction.Id > 0)
+            await _db.UpdateTransactionAsync(transaction);
+        else
+            await _db.SaveTransactionAsync(transaction);
+
+        await Shell.Current.GoToAsync("..");
     }
 }
