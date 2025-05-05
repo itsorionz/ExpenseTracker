@@ -5,11 +5,11 @@
        x:Class="ExpenseTracker.AppShell"
        Title="Expense Tracker">
 
-    <ShellItem Title="Home" Route="HomePage" Icon="">
+    <ShellItem Title="Home" Route="HomePage" Icon="home.png">
         <ShellContent ContentTemplate="{DataTemplate views:HomePage}" />
     </ShellItem>
 
-    <ShellItem Title="Reports" Route="ReportPage" Icon="">
+    <ShellItem Title="Reports" Route="ReportPage" Icon="report.png">
         <ShellContent ContentTemplate="{DataTemplate views:ReportPage}" />
     </ShellItem>
 

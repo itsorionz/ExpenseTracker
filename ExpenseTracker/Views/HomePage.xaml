@@ -65,7 +65,7 @@
 
         <Button Text="Add Transaction" Clicked="OnAddClicked" Margin="0,20,0,0"/>
         
-        <Label Text="Developed by Anamul Haque Sohel"
+        <Label Text="Developed by: Anamul Haque Sohel"
             FontSize="12"
             Margin="60"
             TextColor="Gray"
