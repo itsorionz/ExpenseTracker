@@ -21,4 +21,10 @@
         <ShellContent ContentTemplate="{DataTemplate views:MonthlyReportPage}" />
     </ShellItem>
 
+    <Shell.FlyoutFooter>
+        <StackLayout Padding="10" HorizontalOptions="Center">
+            <Label Text="Developed by: Anamul Haque Sohel" FontSize="12" TextColor="Gray"/>
+        </StackLayout>
+    </Shell.FlyoutFooter>
+
 </Shell>
