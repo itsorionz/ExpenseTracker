@@ -20,6 +20,7 @@ public partial class AddTransactionViewModel : ObservableObject
     public AddTransactionViewModel(DatabaseService db)
     {
         _db = db;
+        SelectedType = "Expense";
     }
 
     [RelayCommand]
