@@ -28,7 +28,7 @@ namespace ExpenseTracker.ViewModels
             var data = await _db.GetTransactionsAsync();
             Transactions.Clear();
 
-            foreach (var t in data.OrderByDescending(t => t.Date))
+            foreach (var t in data.OrderByDescending(t => t.Date).Take(8))
                 Transactions.Add(t);
 
             TotalBalance = Transactions.Sum(t => t.Type == "Income" ? t.Amount : -t.Amount);

@@ -29,22 +29,26 @@
         <Grid Padding="10" BackgroundColor="#e0e0e0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="80" />
-                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="150" />
                 <ColumnDefinition Width="80" />
             </Grid.ColumnDefinitions>
 
             <Label Text="Date"
                FontAttributes="Bold"
+               FontSize="16"
                Grid.Column="0"
                VerticalOptions="Center" />
 
             <Label Text="Category"
                FontAttributes="Bold"
+               FontSize="16"
                Grid.Column="1"
+               Grid.ColumnSpan="2"
                VerticalOptions="Center" />
 
             <Label Text="Amount"
                FontAttributes="Bold"
+               FontSize="16"
                Grid.Column="2"
                VerticalOptions="Center" />
         </Grid>
@@ -72,7 +76,7 @@
                         <Grid Padding="10">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="80" />
-                                <ColumnDefinition Width="100" />
+                                <ColumnDefinition Width="150" />
                                 <ColumnDefinition Width="80" />
                             </Grid.ColumnDefinitions>
 
