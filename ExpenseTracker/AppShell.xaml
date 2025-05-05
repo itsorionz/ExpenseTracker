@@ -9,8 +9,16 @@
         <ShellContent ContentTemplate="{DataTemplate views:HomePage}" />
     </ShellItem>
 
-    <ShellItem Title="Reports" Route="ReportPage" Icon="report.png">
-        <ShellContent ContentTemplate="{DataTemplate views:ReportPage}" />
+    <ShellItem Title="Today's Transactions" Route="DailyTransactionPage" Icon="transactional.png">
+        <ShellContent ContentTemplate="{DataTemplate views:DailyTransactionPage}" />
+    </ShellItem>
+
+    <ShellItem Title="Show All Transaction" Route="ShowAllTransactionPage" Icon="transaction.png">
+        <ShellContent ContentTemplate="{DataTemplate views:ShowAllTransactionPage}" />
+    </ShellItem>
+
+    <ShellItem Title="Monthly Report Chart" Route="MonthlyReportPage" Icon="report.png">
+        <ShellContent ContentTemplate="{DataTemplate views:MonthlyReportPage}" />
     </ShellItem>
 
 </Shell>

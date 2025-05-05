@@ -1,8 +1,8 @@
 ﻿using ExpenseTracker.Services;
 using ExpenseTracker.ViewModels;
 using ExpenseTracker.Views;
+using Microcharts.Maui;
 using Microsoft.Extensions.Logging;
-using Syncfusion.Maui.Core.Hosting;
 
 namespace ExpenseTracker
 {
@@ -13,7 +13,7 @@ namespace ExpenseTracker
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
-                .ConfigureSyncfusionCore()
+                .UseMicrocharts()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -22,15 +22,21 @@ namespace ExpenseTracker
 
             string dbPath = Path.Combine(FileSystem.AppDataDirectory, "expenses.db");
             builder.Services.AddSingleton<DatabaseService>(s => new DatabaseService(dbPath));
-
+            builder.Services.AddSingleton<PdfService>();
+            
+                
             builder.Services.AddTransient<HomePage>();
             builder.Services.AddTransient<HomeViewModel>();
-            builder.Services.AddTransient<ReportPage>();
-            builder.Services.AddTransient<ReportViewModel>();
             builder.Services.AddTransient<AddTransactionPage>();
             builder.Services.AddTransient<AddTransactionViewModel>();
             builder.Services.AddTransient<UpdateTransactionViewModel>();
             builder.Services.AddTransient<UpdateTransactionViewModel>();
+            builder.Services.AddTransient<DailyTransactionPage>();
+            builder.Services.AddTransient<DailyTransactionViewModel>();
+            builder.Services.AddTransient<ShowAllTransactionPage>();
+            builder.Services.AddTransient<ShowAllTransactionViewModel>();
+            builder.Services.AddTransient<MonthlyReportPage>();
+            builder.Services.AddTransient<MonthlyReportViewModel>();
 
 #if DEBUG
             builder.Logging.AddDebug();

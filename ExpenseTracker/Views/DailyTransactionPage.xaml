@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ExpenseTracker.Views.DailyTransactionPage"
+             Title="Daily Transactions"
+             xmlns:helper="clr-namespace:ExpenseTracker.Helper">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <helper:TypeToColorConverter x:Key="TypeToColorConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <StackLayout Padding="20" Spacing="5">
+
+        <Label Text="Today's Transaction List:" WidthRequest="250" FontSize="20"  FontAttributes="Bold" HorizontalTextAlignment="Center" Margin="20"/>
+
+        <!-- Header Row -->
+        <Grid Padding="10" ColumnSpacing="10" BackgroundColor="#e0e0e0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Text="Date" FontAttributes="Bold" Grid.Column="0"/>
+            <Label Text="Category" FontAttributes="Bold" Grid.Column="1"/>
+            <Label Text="Amount" FontAttributes="Bold" Grid.Column="2"/>
+        </Grid>
+
+        <!-- Data Rows -->
+        <CollectionView ItemsSource="{Binding FilteredTransactions}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Margin="0,2"
+                    BackgroundColor="#f5f5f5"
+                    Padding="0"
+                    HasShadow="False"
+                    CornerRadius="4">
+                        <Grid Padding="10" ColumnSpacing="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="80"/>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Label Text="{Binding Date, StringFormat='{0:MMM dd}'}" Grid.Column="0"/>
+                            <Label Text="{Binding Category}" Grid.Column="1"/>
+                            <Label Text="{Binding Amount, StringFormat='৳ {0:N2}'}"
+                        Grid.Column="2"
+                        TextColor="{Binding Type, Converter={StaticResource TypeToColorConverter}}" />
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+
+    </StackLayout>
+
+
+</ContentPage>

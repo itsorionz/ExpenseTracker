@@ -2,9 +2,9 @@ using ExpenseTracker.ViewModels;
 
 namespace ExpenseTracker.Views 
 { 
-    public partial class ReportPage : ContentPage
+    public partial class ShowAllTransactionPage : ContentPage
     {
-        public ReportPage(ReportViewModel viewModel)
+        public ShowAllTransactionPage(ShowAllTransactionViewModel viewModel)
         {
             InitializeComponent();
             BindingContext = viewModel;
