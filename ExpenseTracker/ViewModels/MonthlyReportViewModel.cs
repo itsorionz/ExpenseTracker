@@ -11,9 +11,7 @@ namespace ExpenseTracker.ViewModels
         private readonly DatabaseService _db;
 
         [ObservableProperty]
-        private Microcharts.BarChart chart;
-        [ObservableProperty]
-        private Microcharts.LineChart chart2;
+        private Chart chart;
 
         public MonthlyReportViewModel(DatabaseService db)
         {
@@ -54,18 +52,49 @@ namespace ExpenseTracker.ViewModels
                 });
             }
 
-            //Chart = new Microcharts.BarChart 
-            //{
-            //    Entries = entries,
-            //    LabelTextSize = 24,
-            //    Margin = 10
-            //};
-
-            Chart2 = new LineChart
+            Chart = new Microcharts.BarChart
             {
                 Entries = entries,
                 LabelTextSize = 24,
                 Margin = 10
+            };
+
+        }
+
+        public async Task LoadDailyChartAsync()
+        {
+            var transactions = await _db.GetTransactionsAsync();
+            var grouped = transactions
+                .GroupBy(t => t.Date.Date)
+                .Select(g => new
+                {
+                    Date = g.Key,
+                    Total = g.Sum(t => t.Type == "Income" ? t.Amount : -t.Amount)
+                })
+                .OrderBy(x => x.Date)
+                .ToList();
+
+            var entries = new List<ChartEntry>();
+
+            foreach (var item in grouped)
+            {
+                entries.Add(new ChartEntry((float)item.Total)
+                {
+                    Label = item.Date.ToString("dd MMM"),
+                    ValueLabel = $"৳ {item.Total:N0}",
+                    Color = item.Total >= 0 ? SKColor.Parse("#4caf50") : SKColor.Parse("#f44336")
+                });
+            }
+
+            Chart = new BarChart
+            {
+                Entries = entries,
+                LabelTextSize = 20,
+                Margin = 10,
+                ValueLabelOrientation = Orientation.Horizontal,
+                LabelOrientation = Orientation.Horizontal,
+                MaxValue = grouped.Any() ? (float)(Convert.ToDouble(grouped.Max(x => x.Total)) * 1.1) : 0,
+                MinValue = grouped.Any() ? (float)(Convert.ToDouble(grouped.Min(x => x.Total)) * 1.1) : 0
             };
         }
     }
