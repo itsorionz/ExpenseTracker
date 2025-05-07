@@ -6,14 +6,14 @@ using System.Globalization;
 
 namespace ExpenseTracker.ViewModels
 {
-    public partial class MonthlyReportViewModel : ObservableObject
+    public partial class MonthlyDayWiseReportViewModel : ObservableObject
     {
         private readonly DatabaseService _db;
 
         [ObservableProperty]
         private Chart chart;
 
-        public MonthlyReportViewModel(DatabaseService db)
+        public MonthlyDayWiseReportViewModel(DatabaseService db)
         {
             _db = db;
         }

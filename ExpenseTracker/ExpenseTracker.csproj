@@ -85,8 +85,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Views\MonthlyReportsPage.xaml.cs">
-	    <DependentUpon>MonthlyReportsPage.xaml</DependentUpon>
+	  <Compile Update="Views\MonthlyCategoryWiseReportsPage.xaml.cs">
+	    <DependentUpon>MonthlyCategoryWiseReportsPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\MonthlyDayWiseReportsPage.xaml.cs">
+	    <DependentUpon>MonthlyDayWiseReportsPage.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="Views\ShowAllTransactionPage.xaml.cs">
 	    <DependentUpon>ShowAllTransactionPage.xaml</DependentUpon>
@@ -103,10 +106,13 @@
 	  <MauiXaml Update="Views\HomePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\MonthlyCategoryWiseReportsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\ShowAllTransactionPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\MonthlyReportsPage.xaml">
+	  <MauiXaml Update="Views\MonthlyDayWiseReportsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\SyncPage.xaml">

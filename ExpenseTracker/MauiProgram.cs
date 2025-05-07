@@ -25,7 +25,10 @@ namespace ExpenseTracker
             builder.Services.AddSingleton<PdfService>();
             builder.Services.AddSingleton<FirebaseService>();
             builder.Services.AddSingleton<SyncService>();
-            
+
+
+            builder.Services.AddTransient<SyncPage>();
+            builder.Services.AddTransient<SyncViewModel>();
 
             builder.Services.AddTransient<HomePage>();
             builder.Services.AddTransient<HomeViewModel>();
@@ -37,10 +40,11 @@ namespace ExpenseTracker
             builder.Services.AddTransient<DailyTransactionViewModel>();
             builder.Services.AddTransient<ShowAllTransactionPage>();
             builder.Services.AddTransient<ShowAllTransactionViewModel>();
-            builder.Services.AddTransient<MonthlyReportPage>();
-            builder.Services.AddTransient<MonthlyReportViewModel>();
-            builder.Services.AddTransient<SyncPage>();
-            builder.Services.AddTransient<SyncViewModel>();
+            builder.Services.AddTransient<MonthlyDayWiseReportPage>();
+            builder.Services.AddTransient<MonthlyDayWiseReportViewModel>();
+            builder.Services.AddTransient<MonthlyCategoryWiseReportsPage>();
+            builder.Services.AddTransient<MonthlyCategoryWiseReportViewModel>();
+            
 
 #if DEBUG
             builder.Logging.AddDebug();

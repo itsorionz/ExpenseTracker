@@ -17,8 +17,12 @@
         <ShellContent ContentTemplate="{DataTemplate views:ShowAllTransactionPage}" />
     </ShellItem>
 
-    <ShellItem Title="Monthly Report Chart" Route="MonthlyReportPage" Icon="report.png">
-        <ShellContent ContentTemplate="{DataTemplate views:MonthlyReportPage}" />
+    <ShellItem Title="Monthly Day Wise Report" Route="MonthlyDayWiseReportPage" Icon="report.png">
+        <ShellContent ContentTemplate="{DataTemplate views:MonthlyDayWiseReportPage}" />
+    </ShellItem>
+
+    <ShellItem Title="Monthly Category Wise Report" Route="MonthlyCategoryWiseReportsPage" Icon="business_report.png">
+        <ShellContent ContentTemplate="{DataTemplate views:MonthlyCategoryWiseReportsPage}" />
     </ShellItem>
 
     <ShellItem Title="Data Sync" Route="SyncPage" Icon="tick.png">

@@ -7,13 +7,15 @@ namespace ExpenseTracker
         public AppShell()
         {
             InitializeComponent();
+            Routing.RegisterRoute(nameof(SyncPage), typeof(SyncPage));
             Routing.RegisterRoute(nameof(HomePage), typeof(HomePage));
             Routing.RegisterRoute(nameof(AddTransactionPage), typeof(AddTransactionPage));
             Routing.RegisterRoute(nameof(DailyTransactionPage), typeof(DailyTransactionPage));
             Routing.RegisterRoute(nameof(ShowAllTransactionPage), typeof(ShowAllTransactionPage));
             Routing.RegisterRoute(nameof(UpdateTransactionPage), typeof(UpdateTransactionPage));
-            Routing.RegisterRoute(nameof(MonthlyReportPage), typeof(MonthlyReportPage));
-            Routing.RegisterRoute(nameof(SyncPage), typeof(SyncPage));
+            Routing.RegisterRoute(nameof(MonthlyDayWiseReportPage), typeof(MonthlyDayWiseReportPage));
+            Routing.RegisterRoute(nameof(MonthlyCategoryWiseReportsPage), typeof(MonthlyCategoryWiseReportsPage));
+
         }
     }
 }

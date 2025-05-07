@@ -3,11 +3,11 @@ using System.Threading.Tasks;
 
 namespace ExpenseTracker.Views 
 { 
-    public partial class MonthlyReportPage : ContentPage
+    public partial class MonthlyCategoryWiseReportsPage : ContentPage
     {
-        private readonly MonthlyReportViewModel _vm;
+        private readonly MonthlyCategoryWiseReportViewModel _vm;
 
-        public MonthlyReportPage(MonthlyReportViewModel vm)
+        public MonthlyCategoryWiseReportsPage(MonthlyCategoryWiseReportViewModel vm)
         {
             InitializeComponent();
             _vm = vm;
@@ -18,9 +18,9 @@ namespace ExpenseTracker.Views
         {
             base.OnAppearing();
 
-            if (BindingContext is MonthlyReportViewModel vm)
+            if (BindingContext is MonthlyCategoryWiseReportViewModel vm)
             {
-               await vm.LoadDailyChartAsync();
+               await vm.LoadMonthlyCategoryPieChartAsync();
             }
         }
     }
