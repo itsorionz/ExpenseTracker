@@ -1,65 +1,51 @@
-﻿using ExpenseTracker.Models;
-using QuestPDF.Fluent;
-using QContainer = QuestPDF.Infrastructure.IContainer;
-using Colors = QuestPDF.Helpers.Colors;
+﻿using Syncfusion.Pdf;
+using Syncfusion.Pdf.Graphics;
+using ExpenseTracker.Models;
 
 namespace ExpenseTracker.Services
 {
     public class PdfService
     {
-        public Task<byte[]> CreatePdfAsync(List<Transaction> transactions)
+        public async Task<string> CreatePdfAsync(List<Transaction> transactions)
         {
-            var document = Document.Create(container =>
+            // Create a new PDF document
+            using var document = new PdfDocument();
+            var page = document.Pages.Add();
+
+            // Define fonts and brushes
+            var font = new PdfStandardFont(PdfFontFamily.Helvetica, 12);
+            var boldFont = new PdfStandardFont(PdfFontFamily.Helvetica, 12, PdfFontStyle.Bold);
+            var brush = PdfBrushes.Black;
+
+            float y = 10;
+
+            // Headers
+            page.Graphics.DrawString("Date", boldFont, brush, new Syncfusion.Drawing.PointF(0, y));
+            page.Graphics.DrawString("Category", boldFont, brush, new Syncfusion.Drawing.PointF(100, y));
+            page.Graphics.DrawString("Amount", boldFont, brush, new Syncfusion.Drawing.PointF(250, y));
+            y += 20;
+
+            // Data rows
+            foreach (var t in transactions)
             {
-                container.Page(page =>
-                {
-                    page.Margin(30);
-                    page.Content()
-                        .Table(table =>
-                        {
-                            table.ColumnsDefinition(columns =>
-                            {
-                                columns.ConstantColumn(100);
-                                columns.RelativeColumn();
-                                columns.ConstantColumn(100);
-                            });
+                page.Graphics.DrawString(t.Date.ToString("yyyy-MM-dd"), font, brush, new Syncfusion.Drawing.PointF(0, y));
+                page.Graphics.DrawString(t.Category, font, brush, new Syncfusion.Drawing.PointF(100, y));
+                page.Graphics.DrawString($"৳ {t.Amount:N2}", font, brush, new Syncfusion.Drawing.PointF(250, y));
+                y += 20;
+            }
 
-                            // Header
-                            table.Header(header =>
-                            {
-                                header.Cell().Element(c => CellStyle(c)).Text("Date").Bold();
-                                header.Cell().Element(c => CellStyle(c)).Text("Category").Bold();
-                                header.Cell().Element(c => CellStyle(c)).Text("Amount").Bold();
-                            });
+            // Save to memory stream
+            using var stream = new MemoryStream();
+            document.Save(stream);
+            stream.Position = 0;
 
-                            // Body
-                            foreach (var t in transactions)
-                            {
-                                table.Cell().Element(c => CellStyle(c)).Text(t.Date.ToString("yyyy-MM-dd"));
-                                table.Cell().Element(c => CellStyle(c)).Text(t.Category);
-                                table.Cell().Element(c => CellStyle(c)).Text($"৳ {t.Amount:N2}");
-                            }
-                        });
-                });
-            });
+            // Save to file
+            var fileName = $"Transaction_{DateTime.Now:yyyyMMddHHmmss}.pdf";
+            var filePath = Path.Combine(FileSystem.AppDataDirectory, fileName);
+            using var fileStream = File.Create(filePath);
+            stream.CopyTo(fileStream);
 
-            return Task.FromResult(document.GeneratePdf());
+            return filePath; // return path to the generated file
         }
-
-        private QContainer CellStyle(QContainer container)
-        {
-            return container
-                .PaddingVertical(5)
-                .PaddingHorizontal(10)
-                .BorderBottom(1)
-                .BorderColor(Colors.Grey.Lighten2)
-                .AlignLeft()
-                .AlignMiddle();
-        }
-
-
-
-
     }
-
 }

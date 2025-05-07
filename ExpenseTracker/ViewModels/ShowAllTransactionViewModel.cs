@@ -37,16 +37,11 @@ namespace ExpenseTracker.ViewModels
         public async Task DownloadPdf()
         {
             await Filter();
+            string path = await _pdfService.CreatePdfAsync(FilteredTransactions.ToList());
 
-            var pdfBytes = await _pdfService.CreatePdfAsync(FilteredTransactions.ToList());
-
-            string filePath = Path.Combine(FileSystem.CacheDirectory, "TransactionReport.pdf");
-            File.WriteAllBytes(filePath, pdfBytes);
-
-            await Share.RequestAsync(new ShareFileRequest
+            await Launcher.OpenAsync(new OpenFileRequest
             {
-                Title = "Transaction Report",
-                File = new ShareFile(filePath)
+                File = new ReadOnlyFile(path)
             });
         }
 
