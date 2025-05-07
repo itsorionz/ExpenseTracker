@@ -33,11 +33,27 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Frame Margin="0,2"
-                    BackgroundColor="#f5f5f5"
-                    Padding="0"
-                    HasShadow="False"
-                    CornerRadius="4">
-                        <Grid Padding="10" ColumnSpacing="10">
+                        BackgroundColor="#f5f5f5"
+                        Padding="0"
+                        HasShadow="False"
+                        CornerRadius="4">
+                        <SwipeView>
+                            <SwipeView.RightItems>
+                                <SwipeItems Mode="Reveal">
+                                    <SwipeItem Text="Delete"
+                                        BackgroundColor="Red"
+                                        IconImageSource="delete_icon.png"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DeleteCommand}"
+                                        CommandParameter="{Binding}" />
+                                    
+                                    <SwipeItem Text="Update"
+                                        BackgroundColor="LightBlue"
+                                        IconImageSource="edit_icon.png"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.UpdateCommand}"
+                                        CommandParameter="{Binding}" />
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+                            <Grid Padding="10" ColumnSpacing="10">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="80"/>
                                 <ColumnDefinition Width="150"/>
@@ -50,6 +66,7 @@
                         Grid.Column="2"
                         TextColor="{Binding Type, Converter={StaticResource TypeToColorConverter}}" />
                         </Grid>
+                        </SwipeView>
                     </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>

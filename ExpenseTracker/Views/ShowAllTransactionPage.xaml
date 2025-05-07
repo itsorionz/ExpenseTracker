@@ -71,19 +71,36 @@
                        Padding="0"
                        HasShadow="False"
                        CornerRadius="4">
-                        <Grid Padding="10" ColumnSpacing="10">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="80"/>
-                                <ColumnDefinition Width="150"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
+                        <SwipeView>
+                            <SwipeView.RightItems>
+                                <SwipeItems Mode="Reveal">
+                                    <SwipeItem Text="Delete"
+                                        BackgroundColor="Red"
+                                        IconImageSource="delete_icon.png"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DeleteCommand}"
+                                        CommandParameter="{Binding}" />
 
-                            <Label Text="{Binding Date, StringFormat='{0:MMM dd}'}" Grid.Column="0"/>
-                            <Label Text="{Binding Category}" Grid.Column="1"/>
-                            <Label Text="{Binding Amount, StringFormat='৳ {0:N2}'}"
-                           Grid.Column="2"
-                           TextColor="{Binding Type, Converter={StaticResource TypeToColorConverter}}" />
-                        </Grid>
+                                    <SwipeItem Text="Update"
+                                        BackgroundColor="LightBlue"
+                                        IconImageSource="edit_icon.png"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.UpdateCommand}"
+                                        CommandParameter="{Binding}" />
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+                            <Grid Padding="10" ColumnSpacing="10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="80"/>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Label Text="{Binding Date, StringFormat='{0:MMM dd}'}" Grid.Column="0"/>
+                                <Label Text="{Binding Category}" Grid.Column="1"/>
+                                <Label Text="{Binding Amount, StringFormat='৳ {0:N2}'}"
+                               Grid.Column="2"
+                               TextColor="{Binding Type, Converter={StaticResource TypeToColorConverter}}" />
+                            </Grid>
+                        </SwipeView>
                     </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
