@@ -8,6 +8,7 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <helper:TypeToColorConverter x:Key="TypeToColorConverter"/>
+            <helper:AmountToColorConverter x:Key="AmountToColorConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -17,7 +18,7 @@
            HorizontalTextAlignment="Center" />
 
         <Label FontSize="32"
-           TextColor="Green"
+           TextColor="{Binding TotalBalance, Converter={StaticResource AmountToColorConverter}}"
            HorizontalTextAlignment="Center"
            Text="{Binding TotalBalance, StringFormat='৳ {0:N2}'}" />
 

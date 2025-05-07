@@ -9,7 +9,7 @@ public partial class AddTransactionViewModel : ObservableObject
     private readonly DatabaseService _db;
 
     public ObservableCollection<string> Types { get; } = new() { "Income", "Expense" };
-    public ObservableCollection<string> Categories { get; } = new() { "Market Cost", "Bus Rent", "Loan EMI", "Breakfast", "Snack", "Cigarette", "Recharge", "Case Cost", "Others" };
+    public ObservableCollection<string> Categories { get; } = new() { "Salary", "Market Cost", "Bus Rent", "Loan EMI", "Breakfast", "Snack", "Cigarette", "Recharge", "Case Cost", "Others" };
 
     [ObservableProperty] private string selectedType;
     [ObservableProperty] private string selectedCategories;
