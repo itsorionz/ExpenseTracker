@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Collections.ObjectModel;
 using ExpenseTracker.Services;
 using ExpenseTracker.Models;
@@ -10,9 +9,10 @@ public partial class AddTransactionViewModel : ObservableObject
     private readonly DatabaseService _db;
 
     public ObservableCollection<string> Types { get; } = new() { "Income", "Expense" };
+    public ObservableCollection<string> Categories { get; } = new() { "Market Cost", "Bus Rent", "Loan EMI", "Breakfast", "Snack", "Cigarette", "Recharge", "Case Cost", "Others" };
 
     [ObservableProperty] private string selectedType;
-    [ObservableProperty] private string category;
+    [ObservableProperty] private string selectedCategories;
     [ObservableProperty] private decimal amount;
     [ObservableProperty] private DateTime date = DateTime.Today;
     [ObservableProperty] private string notes;
@@ -21,6 +21,7 @@ public partial class AddTransactionViewModel : ObservableObject
     {
         _db = db;
         SelectedType = "Expense";
+        SelectedCategories = "Market Cost";
     }
 
     [RelayCommand]
@@ -31,7 +32,7 @@ public partial class AddTransactionViewModel : ObservableObject
         var transaction = new Transaction
         {
             Type = SelectedType,
-            Category = Category,
+            Category = SelectedCategories,
             Amount = Amount,
             Date = Date,
             Notes = Notes

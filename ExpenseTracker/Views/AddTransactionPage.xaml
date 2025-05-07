@@ -6,7 +6,8 @@
 
     <StackLayout Padding="20" Spacing="10">
         <Picker Title="Type" ItemsSource="{Binding Types}" SelectedItem="{Binding SelectedType}" />
-        <Entry Placeholder="Category" Text="{Binding Category}" />
+        <Picker Title="Category" ItemsSource="{Binding Categories}" SelectedItem="{Binding SelectedCategories}" />
+        <!--<Entry Placeholder="Category" Text="{Binding Category}" />-->
         <Entry Placeholder="Amount" Keyboard="Numeric" Text="{Binding Amount}" />
         <!--<Label Text="{Binding Date, StringFormat='Selected Date: {0:dd-MM-yyyy}'}"
            FontSize="16"
