@@ -23,8 +23,10 @@ namespace ExpenseTracker
             string dbPath = Path.Combine(FileSystem.AppDataDirectory, "expenses.db");
             builder.Services.AddSingleton<DatabaseService>(s => new DatabaseService(dbPath));
             builder.Services.AddSingleton<PdfService>();
+            builder.Services.AddSingleton<FirebaseService>();
+            builder.Services.AddSingleton<SyncService>();
             
-                
+
             builder.Services.AddTransient<HomePage>();
             builder.Services.AddTransient<HomeViewModel>();
             builder.Services.AddTransient<AddTransactionPage>();
@@ -37,6 +39,8 @@ namespace ExpenseTracker
             builder.Services.AddTransient<ShowAllTransactionViewModel>();
             builder.Services.AddTransient<MonthlyReportPage>();
             builder.Services.AddTransient<MonthlyReportViewModel>();
+            builder.Services.AddTransient<SyncPage>();
+            builder.Services.AddTransient<SyncViewModel>();
 
 #if DEBUG
             builder.Logging.AddDebug();

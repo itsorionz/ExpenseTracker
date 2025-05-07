@@ -21,6 +21,10 @@
         <ShellContent ContentTemplate="{DataTemplate views:MonthlyReportPage}" />
     </ShellItem>
 
+    <ShellItem Title="Data Sync" Route="SyncPage" Icon="tick.png">
+        <ShellContent ContentTemplate="{DataTemplate views:SyncPage}" />
+    </ShellItem>
+
     <Shell.FlyoutFooter>
         <StackLayout Padding="10" HorizontalOptions="Center">
             <Label Text="Developed by: Anamul Haque Sohel" FontSize="12" TextColor="Gray"/>

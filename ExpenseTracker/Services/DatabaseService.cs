@@ -1,7 +1,5 @@
 ﻿using SQLite;
 using ExpenseTracker.Models;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace ExpenseTracker.Services
 {
@@ -15,17 +13,6 @@ namespace ExpenseTracker.Services
             _database.CreateTableAsync<Transaction>().Wait();
             //_database.DropTableAsync<Transaction>();
         }
-
-        //public Task<int> DeleteAllTransactionsAsync()
-        //{
-        //    return _database.DeleteAllAsync<Transaction>();
-        //}
-
-        //public async Task ResetTransactionTableAsync()
-        //{
-        //    await _database.DropTableAsync<Transaction>();
-        //    await _database.CreateTableAsync<Transaction>();
-        //}
         public Task<List<Transaction>> GetTransactionsAsync()
         {
             return _database.Table<Transaction>().OrderByDescending(t => t.Date).ToListAsync();
@@ -42,13 +29,20 @@ namespace ExpenseTracker.Services
                 return _database.InsertAsync(transaction);
             }
         }
+
         public Task<int> UpdateTransactionAsync(Transaction transaction)
         {
             return _database.UpdateAsync(transaction);
         }
+
         public Task<int> DeleteTransactionAsync(Transaction transaction)
         {
            return _database.DeleteAsync(transaction);
+        }
+
+        public Task<List<Transaction>> GetUnsyncedTransactionsAsync()
+        {
+            return _database.Table<Transaction>().Where(t => !t.IsSynced).ToListAsync();
         }
     }
 }

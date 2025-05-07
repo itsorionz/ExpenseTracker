@@ -13,6 +13,7 @@ namespace ExpenseTracker
             Routing.RegisterRoute(nameof(ShowAllTransactionPage), typeof(ShowAllTransactionPage));
             Routing.RegisterRoute(nameof(UpdateTransactionPage), typeof(UpdateTransactionPage));
             Routing.RegisterRoute(nameof(MonthlyReportPage), typeof(MonthlyReportPage));
+            Routing.RegisterRoute(nameof(SyncPage), typeof(SyncPage));
         }
     }
 }
