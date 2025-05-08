@@ -27,7 +27,7 @@
            Margin="0,20,0,10" />
 
         <!-- Header Row -->
-        <Grid Padding="10" BackgroundColor="#e0e0e0">
+        <Grid Padding="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="80" />
                 <ColumnDefinition Width="150" />
@@ -40,7 +40,7 @@
                Grid.Column="0"
                VerticalOptions="Center" />
 
-            <Label Text="Category"
+            <Label Text="Category Name"
                FontAttributes="Bold"
                FontSize="16"
                Grid.Column="1"

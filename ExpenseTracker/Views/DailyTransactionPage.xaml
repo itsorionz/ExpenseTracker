@@ -16,44 +16,54 @@
         <Label Text="Today's Transaction List:" WidthRequest="250" FontSize="20"  FontAttributes="Bold" HorizontalTextAlignment="Center" Margin="20"/>
 
         <!-- Header Row -->
-        <Grid Padding="10" ColumnSpacing="10" BackgroundColor="#e0e0e0">
+        <Grid Padding="10" ColumnSpacing="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="80"/>
                 <ColumnDefinition Width="150"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Label Text="Date" FontAttributes="Bold" Grid.Column="0"/>
-            <Label Text="Category" FontAttributes="Bold" Grid.Column="1"/>
-            <Label Text="Amount" FontAttributes="Bold" Grid.Column="2"/>
+            <Label Text="Date"
+               FontAttributes="Bold"
+               FontSize="16"
+               Grid.Column="0"
+               VerticalOptions="Center" />
+
+            <Label Text="Category Name"
+                FontAttributes="Bold"
+                FontSize="16"
+                Grid.Column="1"
+                Grid.ColumnSpan="2"
+                VerticalOptions="Center" />
+
+            <Label Text="Amount"
+                FontAttributes="Bold"
+                FontSize="16"
+                Grid.Column="2"
+                VerticalOptions="Center" />
         </Grid>
 
         <!-- Data Rows -->
-        <CollectionView ItemsSource="{Binding FilteredTransactions}">
+        <CollectionView VerticalOptions="FillAndExpand" MinimumHeightRequest="400"  ItemsSource="{Binding FilteredTransactions}">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Frame Margin="0,2"
-                        BackgroundColor="#f5f5f5"
-                        Padding="0"
-                        HasShadow="False"
-                        CornerRadius="4">
-                        <SwipeView>
-                            <SwipeView.RightItems>
-                                <SwipeItems Mode="Reveal">
-                                    <SwipeItem Text="Delete"
+                    <SwipeView>
+                        <SwipeView.RightItems>
+                            <SwipeItems Mode="Reveal">
+                                <SwipeItem Text="Delete"
                                         BackgroundColor="Red"
                                         IconImageSource="delete_icon.png"
                                         Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DeleteCommand}"
                                         CommandParameter="{Binding}" />
-                                    
-                                    <SwipeItem Text="Update"
+
+                                <SwipeItem Text="Update"
                                         BackgroundColor="LightBlue"
                                         IconImageSource="edit_icon.png"
                                         Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.UpdateCommand}"
                                         CommandParameter="{Binding}" />
-                                </SwipeItems>
-                            </SwipeView.RightItems>
-                            <Grid Padding="10" ColumnSpacing="10">
+                            </SwipeItems>
+                        </SwipeView.RightItems>
+                        <Grid Padding="10" ColumnSpacing="10">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="80"/>
                                 <ColumnDefinition Width="150"/>
@@ -66,8 +76,7 @@
                         Grid.Column="2"
                         TextColor="{Binding Type, Converter={StaticResource TypeToColorConverter}}" />
                         </Grid>
-                        </SwipeView>
-                    </Frame>
+                    </SwipeView>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>

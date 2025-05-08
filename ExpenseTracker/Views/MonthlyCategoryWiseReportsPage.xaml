@@ -6,8 +6,8 @@
              Title="Monthly Category Wise Report">
 
     <StackLayout Padding="20">
-        <Label Text="Monthly Category Wise Report" FontSize="20" VerticalOptions="Center" />
-        <microcharts:ChartView Chart="{Binding Chart}" HeightRequest="300" />
+        <Label Text="Monthly Category Wise Report" FontSize="18" HorizontalOptions="Center" Margin="20"/>
+        <microcharts:ChartView Chart="{Binding Chart}" HeightRequest="400" BackgroundColor="LightGrey" />
     </StackLayout>
 
 </ContentPage>

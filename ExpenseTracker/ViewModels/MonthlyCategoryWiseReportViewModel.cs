@@ -114,7 +114,7 @@ namespace ExpenseTracker.ViewModels
             Chart = new PieChart
             {
                 Entries = entries,
-                LabelTextSize = 18,
+                LabelTextSize = 20,
                 BackgroundColor = SKColors.Transparent,
                 HoleRadius = 0.3f
             };

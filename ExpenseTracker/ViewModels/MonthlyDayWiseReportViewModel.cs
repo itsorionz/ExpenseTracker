@@ -89,8 +89,8 @@ namespace ExpenseTracker.ViewModels
             Chart = new BarChart
             {
                 Entries = entries,
-                LabelTextSize = 20,
-                Margin = 10,
+                LabelTextSize = 30,
+                Margin = 20,
                 ValueLabelOrientation = Orientation.Horizontal,
                 LabelOrientation = Orientation.Horizontal,
                 MaxValue = grouped.Any() ? (float)(Convert.ToDouble(grouped.Max(x => x.Total)) * 1.1) : 0,
