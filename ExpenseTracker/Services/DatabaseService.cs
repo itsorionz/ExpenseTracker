@@ -13,6 +13,13 @@ namespace ExpenseTracker.Services
             _database.CreateTableAsync<Transaction>().Wait();
             //_database.DropTableAsync<Transaction>();
         }
+
+        public async Task<bool> IsDatabaseEmptyAsync()
+        {
+            var count = await _database.Table<Transaction>().CountAsync();
+            return count == 0;
+        }
+
         public Task<List<Transaction>> GetTransactionsAsync()
         {
             return _database.Table<Transaction>().OrderByDescending(t => t.Date).ToListAsync();

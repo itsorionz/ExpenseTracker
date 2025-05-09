@@ -1,6 +1,7 @@
 ﻿using System.Timers;
 using ExpenseTracker.Services;
 using ExpenseTracker.Models;
+using Microsoft.Maui.Storage;
 
 namespace ExpenseTracker.Services
 {
@@ -42,17 +43,36 @@ namespace ExpenseTracker.Services
 
         public async Task SyncAsync()
         {
-            var unsynced = await _databaseService.GetUnsyncedTransactionsAsync();
-            foreach (var transaction in unsynced)
+            await SQLiteToFirebaseAsync();
+            await FirebaseToSQLiteAsync();
+        }
+
+        public async Task SQLiteToFirebaseAsync()
+        {
+            var localUnsynced = await _databaseService.GetUnsyncedTransactionsAsync();
+            foreach (var transaction in localUnsynced)
             {
                 var success = await _firebaseService.UploadTransactionAsync(transaction);
                 if (success)
                 {
                     transaction.IsSynced = true;
+                    await _firebaseService.MarkAsSyncedAsync(transaction.Id);
                     await _databaseService.UpdateTransactionAsync(transaction);
                 }
             }
         }
+        public async Task FirebaseToSQLiteAsync()
+        {
+            var firebaseUnsynced = await _firebaseService.GetUnsyncedTransactionsAsync();
+            foreach (var transaction in firebaseUnsynced)
+            {
+                transaction.IsSynced = true;
+                await _databaseService.SaveTransactionAsync(transaction);
+                await _firebaseService.MarkAsSyncedAsync(transaction.Id);
+            }
+        }
+
+
     }
 
 }

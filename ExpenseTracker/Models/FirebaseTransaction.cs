@@ -10,5 +10,6 @@ namespace ExpenseTracker.Models
         public decimal Amount { get; set; }
         public DateTime Date { get; set; }
         public string Notes { get; set; }
+        public bool IsSynced { get; set; }
     }
 }
