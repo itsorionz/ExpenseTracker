@@ -22,8 +22,7 @@ namespace ExpenseTracker
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
-            string dbPath = Path.Combine(FileSystem.AppDataDirectory, "expenses.db");
-            builder.Services.AddSingleton<DatabaseService>(s => new DatabaseService(dbPath));
+            builder.Services.AddSingleton<DatabaseService>(s => new DatabaseService());
             builder.Services.AddSingleton<PdfService>();
             builder.Services.AddSingleton<FirebaseService>();
             builder.Services.AddSingleton<SyncService>();

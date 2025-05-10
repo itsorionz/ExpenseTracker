@@ -6,8 +6,9 @@ namespace ExpenseTracker.Services
     public class DatabaseService
     {
         private readonly SQLiteAsyncConnection _database;
+        private readonly string dbPath = Path.Combine(FileSystem.AppDataDirectory, "expenses.db");
 
-        public DatabaseService(string dbPath)
+        public DatabaseService()
         {
             _database = new SQLiteAsyncConnection(dbPath);
             _database.CreateTableAsync<Transaction>().Wait();
@@ -50,8 +51,8 @@ namespace ExpenseTracker.Services
         }
         public void ResetDatabase()
         {
-            _database.DropTableAsync<Transaction>();
-            _database.CreateTableAsync<Transaction>();
+            _database.DropTableAsync<Transaction>().Wait();
+            _database.CreateTableAsync<Transaction>().Wait();
         }
     }
 }
