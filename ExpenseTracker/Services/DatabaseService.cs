@@ -27,14 +27,7 @@ namespace ExpenseTracker.Services
 
         public Task<int> SaveTransactionAsync(Transaction transaction)
         {
-            if (transaction.Id != 0)
-            {
-                return _database.UpdateAsync(transaction);
-            }
-            else
-            {
-                return _database.InsertAsync(transaction);
-            }
+            return _database.InsertAsync(transaction);
         }
 
         public Task<int> UpdateTransactionAsync(Transaction transaction)
