@@ -42,6 +42,8 @@ namespace ExpenseTracker
             builder.Services.AddTransient<UpdateTransactionViewModel>();
             builder.Services.AddTransient<DailyTransactionPage>();
             builder.Services.AddTransient<DailyTransactionViewModel>();
+            builder.Services.AddTransient<ExpenseAssumptionPage>();
+            builder.Services.AddTransient<ExpenseAssumptionViewModel>();
             builder.Services.AddTransient<ShowAllTransactionPage>();
             builder.Services.AddTransient<ShowAllTransactionViewModel>();
             builder.Services.AddTransient<MonthlyDayWiseReportPage>();

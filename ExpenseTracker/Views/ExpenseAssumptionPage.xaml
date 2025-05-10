@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ExpenseTracker.Views.ExpenseAssumptionPage"
+             Title="Expense Assumption Page">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+            <Label Text="Expense Assumption Overview"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center" />
+
+            <Frame BackgroundColor="#ccc" CornerRadius="12" Padding="15" HasShadow="True" >
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Total Income"
+                           FontSize="18"
+                           TextColor="Black"
+                           FontAttributes="Bold" />
+                    <Label Text="{Binding TotalIncome, StringFormat='৳ {0:N2}'}"
+                           FontSize="18"
+                           TextColor="Green" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame BackgroundColor="#fff3e0" CornerRadius="12" Padding="15" HasShadow="True">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Total Expense"
+                           FontSize="18"
+                           TextColor="Black"
+                           FontAttributes="Bold" />
+                            <Label Text="{Binding TotalExpense, StringFormat='৳ {0:N2}'}"
+                           FontSize="18"
+                           TextColor="Red" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame BackgroundColor="#f1f8e9" CornerRadius="12" Padding="15" HasShadow="True">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Remaining Balance"
+                           FontSize="18"
+                           TextColor="Black"
+                           FontAttributes="Bold" />
+                    <Label Text="{Binding TotalBalance, StringFormat='৳ {0:N2}'}"
+                           FontSize="18"
+                           TextColor="DarkBlue" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame BackgroundColor="#ede7f6" CornerRadius="12" Padding="15" HasShadow="True">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Remaining Days This Month"
+                           TextColor="Black"
+                           FontSize="16"
+                            FontAttributes="Bold"/>
+                    <Label Text="{Binding RemainingDays}"
+                           TextColor="Black"
+                           FontSize="16"
+                           FontAttributes="Bold"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame BackgroundColor="#ffecb3" CornerRadius="12" Padding="15" HasShadow="True">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Suggested Daily Budget"
+                           FontSize="18"
+                           TextColor="Black"
+                           FontAttributes="Bold" />
+                    <Label Text="{Binding AssumptionPerDay, StringFormat='৳ {0:N2}'}"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           TextColor="Black" />
+                </VerticalStackLayout>
+            </Frame>
+        </VerticalStackLayout>
+    </ScrollView>
+    
+</ContentPage>

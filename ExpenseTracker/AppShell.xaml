@@ -13,6 +13,10 @@
         <ShellContent ContentTemplate="{DataTemplate views:DailyTransactionPage}" />
     </ShellItem>
 
+    <ShellItem Title="Expense Assumption" Route="ExpenseAssumptionPage" Icon="budget.png">
+        <ShellContent ContentTemplate="{DataTemplate views:ExpenseAssumptionPage}" />
+    </ShellItem>
+
     <ShellItem Title="Show All Transaction" Route="ShowAllTransactionPage" Icon="transaction.png">
         <ShellContent ContentTemplate="{DataTemplate views:ShowAllTransactionPage}" />
     </ShellItem>

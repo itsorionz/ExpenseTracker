@@ -10,7 +10,8 @@ namespace ExpenseTracker.ViewModels
     public partial class DailyTransactionViewModel : ObservableObject
     {
         private readonly DatabaseService _db;
-        [ObservableProperty] private ObservableCollection<Transaction> filteredTransactions = new();
+        [ObservableProperty] 
+        private ObservableCollection<Transaction> filteredTransactions = new();
 
         public DailyTransactionViewModel(DatabaseService db)
         {
@@ -22,7 +23,7 @@ namespace ExpenseTracker.ViewModels
         {
             var all = await _db.GetTransactionsAsync();
             var filtered = all
-                .Where(t => t.Date >= DateTime.Today)
+                .Where(t => t.Date == DateTime.Today)
                 .OrderByDescending(t => t.Date)
                 .ToList();
             FilteredTransactions = new ObservableCollection<Transaction>(filtered);
