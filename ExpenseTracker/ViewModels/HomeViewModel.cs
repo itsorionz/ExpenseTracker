@@ -39,8 +39,8 @@ namespace ExpenseTracker.ViewModels
         {
             if (transaction == null) return;
             await _db.DeleteTransactionAsync(transaction);
-            transactions.Remove(transaction);
-            TotalBalance = transactions.Sum(t => t.Type == "Income" ? t.Amount : -t.Amount);
+            Transactions.Remove(transaction);
+            TotalBalance = Transactions.Sum(t => t.Type == "Income" ? t.Amount : -t.Amount);
         }
 
         [RelayCommand]
