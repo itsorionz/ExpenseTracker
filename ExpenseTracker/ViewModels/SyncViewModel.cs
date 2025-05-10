@@ -1,3 +1,5 @@
+using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using ExpenseTracker.Services;
@@ -12,9 +14,17 @@ public partial class SyncViewModel : ObservableObject
         _syncService = syncService;
     }
 
+    //[RelayCommand]
+    //public async Task StartSyncAsync()
+    //{
+    //   await _syncService.SyncAsync();
+    //}
+
     [RelayCommand]
-    public async Task StartSyncAsync()
+    public void StartSync()
     {
-       await _syncService.SyncAsync();
+        var toast = Toast.Make("Sync Service started", ToastDuration.Short, 14);
+        toast.Show();
+        _syncService.Sync();
     }
 }

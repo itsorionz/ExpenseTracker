@@ -1,4 +1,6 @@
-﻿namespace ExpenseTracker.Services
+﻿using CommunityToolkit.Maui.Alerts;
+
+namespace ExpenseTracker.Services
 {
     public class SyncService
     {

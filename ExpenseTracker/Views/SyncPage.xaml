@@ -6,13 +6,14 @@
 
 
     <StackLayout Padding="20" Spacing="10">
-        <Label Text="Start Sync" 
+        <Label Text="Start Sync Service" 
                FontAttributes="Bold"
                FontSize="16"
                Padding="5"/>
 
         <!--<Button Text="Data Sync Service" Command="{Binding StartSyncAsyncCommand}" />-->
-        <Button Text="Data Sync Service" Command="{Binding StartSyncCommand}" />
+        <Button Text="Start Sync Service" Command="{Binding StartSyncCommand}" />
+
     </StackLayout>
     
 </ContentPage>

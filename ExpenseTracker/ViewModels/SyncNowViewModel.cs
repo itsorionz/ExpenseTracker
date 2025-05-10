@@ -23,6 +23,7 @@ public partial class SyncNowViewModel : ObservableObject
     {
         _syncNowService.ResetSQLite();
     }
+
     [RelayCommand]
     public void ReseCloudDatabase()
     {
