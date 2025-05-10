@@ -19,7 +19,7 @@ namespace ExpenseTracker.Services
         {
             SQLiteToFirebase();
             FirebaseToSQLite();
-            var toast = Toast.Make("Sync complete", ToastDuration.Short, 14);
+            var toast = Toast.Make("Sync completed", ToastDuration.Short, 14);
             toast.Show();
         }
 
