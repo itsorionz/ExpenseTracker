@@ -8,6 +8,7 @@ namespace ExpenseTracker
         {
             InitializeComponent();
             Routing.RegisterRoute(nameof(SyncPage), typeof(SyncPage));
+            Routing.RegisterRoute(nameof(SyncNowPage), typeof(SyncNowPage));
             Routing.RegisterRoute(nameof(HomePage), typeof(HomePage));
             Routing.RegisterRoute(nameof(AddTransactionPage), typeof(AddTransactionPage));
             Routing.RegisterRoute(nameof(DailyTransactionPage), typeof(DailyTransactionPage));

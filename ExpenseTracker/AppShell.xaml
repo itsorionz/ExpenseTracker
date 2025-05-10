@@ -25,7 +25,11 @@
         <ShellContent ContentTemplate="{DataTemplate views:MonthlyCategoryWiseReportsPage}" />
     </ShellItem>
 
-    <ShellItem Title="Data Sync" Route="SyncPage" Icon="tick.png">
+    <ShellItem Title="Cloud Sync" Route="SyncNowPage" Icon="cloud_sync.png">
+        <ShellContent ContentTemplate="{DataTemplate views:SyncNowPage}" />
+    </ShellItem>
+
+    <ShellItem Title="Cloud Sync Service" Route="SyncPage" Icon="tick.png">
         <ShellContent ContentTemplate="{DataTemplate views:SyncPage}" />
     </ShellItem>
 

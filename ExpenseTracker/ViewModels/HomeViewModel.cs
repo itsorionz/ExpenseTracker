@@ -31,7 +31,7 @@ namespace ExpenseTracker.ViewModels
             foreach (var t in data.OrderByDescending(t => t.Date).Take(10))
                 Transactions.Add(t);
 
-            TotalBalance = Transactions.Sum(t => t.Type == "Income" ? t.Amount : -t.Amount);
+            TotalBalance = data.Sum(t => t.Type == "Income" ? t.Amount : -t.Amount);
         }
 
         [RelayCommand]

@@ -4,12 +4,12 @@ namespace ExpenseTracker
 {
     public partial class App : Application
     {
-        private readonly SyncService _syncService;
+        //private readonly SyncService _syncService;
 
         public App(SyncService syncService)
         {
             InitializeComponent();
-            _syncService = syncService;
+            //_syncService = syncService;        
         }
 
         protected override Window CreateWindow(IActivationState? activationState)

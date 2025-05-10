@@ -11,7 +11,6 @@ namespace ExpenseTracker.Services
         {
             _database = new SQLiteAsyncConnection(dbPath);
             _database.CreateTableAsync<Transaction>().Wait();
-            //_database.DropTableAsync<Transaction>();
         }
 
         public async Task<bool> IsDatabaseEmptyAsync()
@@ -43,6 +42,14 @@ namespace ExpenseTracker.Services
         public Task<List<Transaction>> GetUnsyncedTransactionsAsync()
         {
             return _database.Table<Transaction>().Where(t => !t.IsSynced).ToListAsync();
+        }
+        public async Task ResetDatabaseAsync()
+        {
+            await _database.DropTableAsync<Transaction>();
+        }
+        public void ResetDatabase()
+        {
+            _database.DropTableAsync<Transaction>();
         }
     }
 }

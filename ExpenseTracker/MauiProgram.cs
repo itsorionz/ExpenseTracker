@@ -1,4 +1,5 @@
-﻿using ExpenseTracker.Services;
+﻿using CommunityToolkit.Maui;
+using ExpenseTracker.Services;
 using ExpenseTracker.ViewModels;
 using ExpenseTracker.Views;
 using Microcharts.Maui;
@@ -14,6 +15,7 @@ namespace ExpenseTracker
             builder
                 .UseMauiApp<App>()
                 .UseMicrocharts()
+                .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -25,10 +27,13 @@ namespace ExpenseTracker
             builder.Services.AddSingleton<PdfService>();
             builder.Services.AddSingleton<FirebaseService>();
             builder.Services.AddSingleton<SyncService>();
+            builder.Services.AddSingleton<SyncNowService>();
 
 
             builder.Services.AddTransient<SyncPage>();
             builder.Services.AddTransient<SyncViewModel>();
+            builder.Services.AddTransient<SyncNowPage>();
+            builder.Services.AddTransient<SyncNowViewModel>();
 
             builder.Services.AddTransient<HomePage>();
             builder.Services.AddTransient<HomeViewModel>();

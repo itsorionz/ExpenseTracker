@@ -95,6 +95,12 @@ namespace ExpenseTracker.Services
             return response.IsSuccessStatusCode;
         }
 
+        public bool ResetFirebase()
+        {
+            var response = _httpClient.DeleteAsync($"{_baseUrl}/transactions.json").GetAwaiter().GetResult();
+            return response.IsSuccessStatusCode;
+        }
+
     }
 
 
