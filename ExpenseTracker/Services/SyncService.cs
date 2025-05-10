@@ -14,7 +14,7 @@
 
             _syncTimer = new System.Timers.Timer
             {
-                Interval = 60 * 60 * 1000,
+                Interval = 5 * 60 * 1000,
                 AutoReset = true,
                 Enabled = true
             };
