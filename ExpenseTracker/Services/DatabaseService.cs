@@ -46,10 +46,12 @@ namespace ExpenseTracker.Services
         public async Task ResetDatabaseAsync()
         {
             await _database.DropTableAsync<Transaction>();
+            await _database.CreateTableAsync<Transaction>();
         }
         public void ResetDatabase()
         {
             _database.DropTableAsync<Transaction>();
+            _database.CreateTableAsync<Transaction>();
         }
     }
 }
