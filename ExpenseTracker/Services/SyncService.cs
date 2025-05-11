@@ -16,7 +16,7 @@ namespace ExpenseTracker.Services
 
             _syncTimer = new System.Timers.Timer
             {
-                Interval = 5 * 60 * 1000,
+                Interval = 2 * 60 * 1000,
                 AutoReset = true,
                 Enabled = true
             };
