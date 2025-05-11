@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ExpenseTracker.Views.AddCategoryPage"
+             xmlns:helper="clr-namespace:ExpenseTracker.Helper"
+             Title="Add Category Page">
+
+    <StackLayout Padding="20" Spacing="10">
+        <Picker Title="Type" ItemsSource="{x:Static helper:Constants.TransactionTypes}"
+                SelectedItem="{Binding SelectedType}" />
+        <Entry Placeholder="Enter Category Name" Text="{Binding CategoryName}" />
+        <Button Text="Save" Command="{Binding SaveCategoryCommand}" />
+
+
+        <Label Text="Category Name List:"
+               FontSize="18"
+               FontAttributes="Bold"
+               Margin="0,20,0,10" />
+
+        <!-- Header Row -->
+        <Grid Padding="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50" />
+                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="150" />
+            </Grid.ColumnDefinitions>
+            <Label Text="SL."
+                   FontAttributes="Bold"
+                   FontSize="16"
+                   Grid.Column="0"
+                   VerticalOptions="Center" />
+            
+            <Label Text="Type"
+                   FontAttributes="Bold"
+                   FontSize="16"
+                   Grid.Column="1"
+                   VerticalOptions="Center" />
+
+            <Label Text="Category Name"
+                   FontAttributes="Bold"
+                   FontSize="16"
+                   Grid.Column="2"
+                   VerticalOptions="Center" />
+        </Grid>
+
+        <CollectionView VerticalOptions="FillAndExpand" MinimumHeightRequest="400" ItemsSource="{Binding Categories}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <SwipeView>
+                        <SwipeView.RightItems>
+                            <SwipeItems Mode="Reveal">
+                                <SwipeItem Text="Delete"
+                                   BackgroundColor="Red"
+                                   IconImageSource="delete_icon.png"
+                                   Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DeleteCommand}"
+                                   CommandParameter="{Binding}" />
+                                <SwipeItem Text="Update"
+                                   BackgroundColor="LightBlue"
+                                   IconImageSource="edit_icon.png"
+                                   Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.UpdateCommand}"
+                                   CommandParameter="{Binding}" />
+                            </SwipeItems>
+                        </SwipeView.RightItems>
+
+                        <Grid Padding="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50" />
+                                <ColumnDefinition Width="100" />
+                                <ColumnDefinition Width="150" />
+                            </Grid.ColumnDefinitions>
+
+                            <Label Text="{Binding Sl}"
+                                   VerticalOptions="Center"
+                                   Grid.Column="0" />
+                            
+                            <Label Text="{Binding Type}"
+                                   VerticalOptions="Center"
+                                   Grid.Column="1" />
+
+                            <Label Text="{Binding CategoryName}"
+                                   VerticalOptions="Center"
+                                   Grid.Column="2" />
+                        </Grid>
+                    </SwipeView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        
+    </StackLayout>
+    
+</ContentPage>

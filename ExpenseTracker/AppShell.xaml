@@ -9,6 +9,10 @@
         <ShellContent ContentTemplate="{DataTemplate views:HomePage}" />
     </ShellItem>
 
+    <ShellItem Title="Add Transaction" Route="AddTransactionPage" Icon="add.png">
+        <ShellContent ContentTemplate="{DataTemplate views:AddTransactionPage}" />
+    </ShellItem>
+    
     <ShellItem Title="Today's Transactions" Route="DailyTransactionPage" Icon="transactional.png">
         <ShellContent ContentTemplate="{DataTemplate views:DailyTransactionPage}" />
     </ShellItem>
@@ -27,6 +31,10 @@
 
     <ShellItem Title="Monthly Category Wise Report" Route="MonthlyCategoryWiseReportsPage" Icon="business_report.png">
         <ShellContent ContentTemplate="{DataTemplate views:MonthlyCategoryWiseReportsPage}" />
+    </ShellItem>
+
+    <ShellItem Title="Library Entry" Route="LibraryPage" Icon="mobile_library.png">
+        <ShellContent ContentTemplate="{DataTemplate views:LibraryPage}" />
     </ShellItem>
 
     <ShellItem Title="Cloud Sync" Route="SyncNowPage" Icon="cloud_sync.png">

@@ -2,10 +2,12 @@ namespace ExpenseTracker.Views
 {
     public partial class AddTransactionPage : ContentPage
     {
-        public AddTransactionPage(AddTransactionViewModel viewModel)
+        private readonly AddTransactionViewModel _vm;
+        public AddTransactionPage(AddTransactionViewModel vm)
         {
             InitializeComponent();
-            BindingContext = viewModel;
+            _vm = vm;
+            BindingContext = vm;
         }
     }
 }

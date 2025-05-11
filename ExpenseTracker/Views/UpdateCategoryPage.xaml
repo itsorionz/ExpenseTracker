@@ -3,27 +3,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:ExpenseTracker.ViewModels"
              xmlns:helper="clr-namespace:ExpenseTracker.Helper"
-             x:Class="ExpenseTracker.Views.UpdateTransactionPage"
-             x:DataType="viewModels:UpdateTransactionViewModel"
-             Title="Update Transaction Page">
+             x:Class="ExpenseTracker.Views.UpdateCategoryPage"
+             x:DataType="viewModels:UpdateCategoryViewModel"
+             Title="Update Category Page">
 
     <StackLayout Padding="20" Spacing="10">
         <Picker Title="Type"
                 ItemsSource="{x:Static helper:Constants.TransactionTypes}"
                 SelectedItem="{Binding SelectedType}" />
 
-        <Entry Placeholder="Category"
-               Text="{Binding Category}" />
-
-        <Entry Placeholder="Amount"
-               Text="{Binding Amount}"
-               Keyboard="Numeric" />
-
-        <DatePicker Date="{Binding Date}" />
-
-        <Editor Placeholder="Notes"
-                AutoSize="TextChanges"
-                Text="{Binding Notes}" />
+        <Entry Placeholder="Category Name"
+               Text="{Binding CategoryName}" />
 
         <Button Text="Update"
                 Command="{Binding SaveCommand}" />

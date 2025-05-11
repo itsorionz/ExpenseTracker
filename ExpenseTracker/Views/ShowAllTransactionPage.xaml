@@ -31,24 +31,6 @@
 
         <Label Text="Transaction List:" WidthRequest="250" FontSize="20"  FontAttributes="Bold" HorizontalTextAlignment="Center"/>
 
-        <!--<StackLayout Orientation="Horizontal" Spacing="10" >
-            <Label Text="Date" WidthRequest="80" FontAttributes="Bold" />
-            <Label Text="Category" WidthRequest="150" FontAttributes="Bold" />
-            <Label Text="Amount" FontAttributes="Bold" />
-        </StackLayout>
-
-        <CollectionView ItemsSource="{Binding FilteredTransactions}">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <StackLayout Orientation="Horizontal" Spacing="10">
-                        <Label Text="{Binding Date, StringFormat='{0:MMM dd}'}" WidthRequest="80"/>
-                        <Label Text="{Binding Category}" WidthRequest="150"/>
-                        <Label Text="{Binding Amount, StringFormat='৳ {0:N2}'}"/>
-                    </StackLayout>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>-->
-
         <!-- Header Row -->
         <Grid Padding="10" ColumnSpacing="10">
             <Grid.ColumnDefinitions>

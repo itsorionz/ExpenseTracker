@@ -8,31 +8,53 @@ public partial class AddTransactionViewModel : ObservableObject
 {
     private readonly DatabaseService _db;
 
-    public ObservableCollection<string> Types { get; } = new() { "Income", "Expense" };
-    public ObservableCollection<string> Categories { get; } = new() { "Salary", "Market Cost", "Medicine", "Bus Rent", "Loan EMI", "Breakfast", "Snack", "Cigarette", "Recharge", "Case Cost", "Others" };
-
-    [ObservableProperty] private string selectedType;
-    [ObservableProperty] private string selectedCategories;
-    [ObservableProperty] private decimal amount;
-    [ObservableProperty] private DateTime date = DateTime.Today;
-    [ObservableProperty] private string notes;
+    public ObservableCollection<Category> Categories { get; set; } = new();
+    [ObservableProperty] 
+    private string selectedType;
+    [ObservableProperty] 
+    private Category selectedCategory;
+    [ObservableProperty] 
+    private decimal amount;
+    [ObservableProperty] 
+    private DateTime date = DateTime.Today;
+    [ObservableProperty] 
+    private string notes;
 
     public AddTransactionViewModel(DatabaseService db)
     {
         _db = db;
         SelectedType = "Expense";
-        SelectedCategories = "Market Cost";
+        LoadCategoriesByType();
+    }
+
+    [RelayCommand]
+    private async void LoadCategoriesByType()
+    {
+        var allCategories = await _db.GetCategoryAsync();
+        var filtered = allCategories
+                        .Where(c => c.Type == SelectedType)
+                        .ToList();
+        Categories.Clear();
+        foreach (var cat in filtered)
+            Categories.Add(cat);
+
+        SelectedCategory = Categories.FirstOrDefault();
+    }
+
+    partial void OnSelectedTypeChanged(string value)
+    {
+        LoadCategoriesByType(); // reload when type changes
     }
 
     [RelayCommand]
     public async Task Save()
     {
-        if (string.IsNullOrWhiteSpace(SelectedType) || Amount <= 0)
+        if (string.IsNullOrWhiteSpace(SelectedType) || Categories.Count <= 0 || Amount <= 0)
             return;
         var transaction = new Transaction
         {
             Type = SelectedType,
-            Category = SelectedCategories,
+            Category = SelectedCategory.CategoryName,
             Amount = Amount,
             Date = Date,
             Notes = Notes

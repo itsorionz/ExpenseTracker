@@ -57,15 +57,12 @@ namespace ExpenseTracker.ViewModels
         {
             if (string.IsNullOrWhiteSpace(SelectedType) || Amount <= 0)
                 return;
-
             Transaction.Type = SelectedType;
             Transaction.Category = Category;
             Transaction.Amount = Amount;
             Transaction.Date = Date;
             Transaction.Notes = Notes;
-
-            await _db.SaveTransactionAsync(Transaction);
-
+            await _db.UpdateTransactionAsync(Transaction);
             await Shell.Current.GoToAsync("..");
         }
     }

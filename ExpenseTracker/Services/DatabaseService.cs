@@ -12,12 +12,18 @@ namespace ExpenseTracker.Services
         {
             _database = new SQLiteAsyncConnection(dbPath);
             _database.CreateTableAsync<Transaction>().Wait();
+            _database.CreateTableAsync<Category>().Wait();
         }
 
         public async Task<bool> IsDatabaseEmptyAsync()
         {
             var count = await _database.Table<Transaction>().CountAsync();
             return count == 0;
+        }
+
+        public Task<List<Transaction>> GetUnsyncedTransactionsAsync()
+        {
+            return _database.Table<Transaction>().Where(t => !t.IsSynced).ToListAsync();
         }
 
         public Task<List<Transaction>> GetTransactionsAsync()
@@ -39,20 +45,43 @@ namespace ExpenseTracker.Services
         {
            return _database.DeleteAsync(transaction);
         }
-
-        public Task<List<Transaction>> GetUnsyncedTransactionsAsync()
+        
+        public Task<List<Category>> GetUnsyncedCategoryAsync()
         {
-            return _database.Table<Transaction>().Where(t => !t.IsSynced).ToListAsync();
+            return _database.Table<Category>().Where(t => !t.IsSynced).ToListAsync();
+        }
+        public Task<List<Category>> GetCategoryAsync()
+        {
+            return _database.Table<Category>().ToListAsync();
+        }
+
+        public Task<int> SaveCategoryAsync(Category category)
+        {
+            return _database.InsertAsync(category);
+        }
+
+        public Task<int> UpdateCategoryAsync(Category category)
+        {
+            return _database.UpdateAsync(category);
+        }
+
+        public Task<int> DeleteCategoryAsync(Category category)
+        {
+            return _database.DeleteAsync(category);
         }
         public async Task ResetDatabaseAsync()
         {
             await _database.DropTableAsync<Transaction>();
             await _database.CreateTableAsync<Transaction>();
+            await _database.DropTableAsync<Category>();
+            await _database.CreateTableAsync<Category>();
         }
         public void ResetDatabase()
         {
             _database.DropTableAsync<Transaction>().Wait();
+            _database.DropTableAsync<Category>().Wait();
             _database.CreateTableAsync<Transaction>().Wait();
+            _database.CreateTableAsync<Category>().Wait();
         }
     }
 }

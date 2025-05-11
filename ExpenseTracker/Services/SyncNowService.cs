@@ -17,13 +17,15 @@ namespace ExpenseTracker.Services
 
         public void Sync()
         {
-            SQLiteToFirebase();
-            FirebaseToSQLite();
+            TransactionSQLiteToFirebase();
+            CategorySQLiteToFirebase();
+            TransactionFirebaseToSQLite();
+            CategoryFirebaseToSQLite();
             var toast = Toast.Make("Sync completed", ToastDuration.Short, 14);
             toast.Show();
         }
 
-        public void SQLiteToFirebase()
+        public void TransactionSQLiteToFirebase()
         {
             var localUnsynced = _databaseService.GetUnsyncedTransactionsAsync().GetAwaiter().GetResult();
             foreach (var transaction in localUnsynced)
@@ -32,34 +34,59 @@ namespace ExpenseTracker.Services
                 if (success)
                 {
                     transaction.IsSynced = true;
-                    _firebaseService.MarkAsSynced(transaction.Id);
+                    _firebaseService.MarkTransactionAsSynced(transaction.Id);
                     _databaseService.UpdateTransactionAsync(transaction).GetAwaiter().GetResult();
                 }
             }
         }
+        public void CategorySQLiteToFirebase()
+        {
+            var localUnsynced = _databaseService.GetUnsyncedCategoryAsync().GetAwaiter().GetResult();
+            foreach (var category in localUnsynced)
+            {
+                var success = _firebaseService.UploadCategory(category);
+                if (success)
+                {
+                    category.IsSynced = true;
+                    _firebaseService.MarkCategoryAsSynced(category.Id);
+                    _databaseService.UpdateCategoryAsync(category).GetAwaiter().GetResult();
+                }
+            }
+        }
 
-        public void FirebaseToSQLite()
+        public void TransactionFirebaseToSQLite()
         {
             var firebaseUnsynced = _firebaseService.GetUnsyncedTransactions();
             foreach (var transaction in firebaseUnsynced)
             {
                 transaction.IsSynced = true;
                 _databaseService.SaveTransactionAsync(transaction).GetAwaiter().GetResult();
-                _firebaseService.MarkAsSynced(transaction.Id);
+                _firebaseService.MarkTransactionAsSynced(transaction.Id);
+            }
+        }
+
+        public void CategoryFirebaseToSQLite()
+        {
+            var firebaseUnsynced = _firebaseService.GetUnsyncedCategories();
+            foreach (var category in firebaseUnsynced)
+            {
+                category.IsSynced = true;
+                _databaseService.SaveCategoryAsync(category).GetAwaiter().GetResult();
+                _firebaseService.MarkCategoryAsSynced(category.Id);
             }
         }
 
         public void ResetFirebase()
         {
             _firebaseService.ResetFirebase();
-            var toast = Toast.Make("Reset Successfully", ToastDuration.Short, 14);
+            var toast = Toast.Make("Reset Firebase Successfully", ToastDuration.Short, 14);
             toast.Show();
         }
 
         public void ResetSQLite()
         {
             _databaseService.ResetDatabase();
-            var toast = Toast.Make("Reset Successfully", ToastDuration.Short, 14);
+            var toast = Toast.Make("Reset Local Successfully", ToastDuration.Short, 14);
             toast.Show();
         }
 
