@@ -33,17 +33,17 @@ public partial class AddTransactionViewModel : ObservableObject
         var allCategories = await _db.GetCategoryAsync();
         var filtered = allCategories
                         .Where(c => c.Type == SelectedType)
+                        .OrderBy(a => a.Id)
                         .ToList();
         Categories.Clear();
         foreach (var cat in filtered)
             Categories.Add(cat);
-
         SelectedCategory = Categories.FirstOrDefault();
     }
 
     partial void OnSelectedTypeChanged(string value)
     {
-        LoadCategoriesByType(); // reload when type changes
+        LoadCategoriesByType();
     }
 
     [RelayCommand]
