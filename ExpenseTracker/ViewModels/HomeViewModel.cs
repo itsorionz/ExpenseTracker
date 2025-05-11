@@ -23,6 +23,12 @@ namespace ExpenseTracker.ViewModels
             transactions = new ObservableCollection<Transaction>();
         }
 
+        [RelayCommand]
+        public async Task RefreshAsync()
+        {
+            await LoadTransactions(); 
+        }
+
         public async Task LoadTransactions()
         {
             var data = await _db.GetTransactionsAsync();

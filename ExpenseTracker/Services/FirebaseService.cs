@@ -68,7 +68,9 @@ namespace ExpenseTracker.Services
                 return new List<Transaction>();
             var json = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
             var dict = JsonConvert.DeserializeObject<Dictionary<string, Transaction>>(json);
-            return dict?.Values.Select(x => new Transaction
+            return dict?.Values
+            .Where(x => x != null)
+            .Select(x => new Transaction
             {
                 Id = x.Id,
                 Amount = x.Amount,
@@ -77,7 +79,10 @@ namespace ExpenseTracker.Services
                 Notes = x.Notes,
                 Type = x.Type,
                 IsSynced = true
-            }).ToList() ?? new List<Transaction>();
+            })
+            .OrderBy(x => x.Id)
+            .ToList() ?? new List<Transaction>();
+
         }
 
         public bool MarkTransactionAsSynced(int id)
@@ -97,13 +102,17 @@ namespace ExpenseTracker.Services
                 return new List<Category>();
             var json = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
             var dict = JsonConvert.DeserializeObject<Dictionary<string, Category>>(json);
-            return dict?.Values.Select(x => new Category
+            return dict?.Values
+            .Where(x => x != null)
+            .Select(x => new Category
             {
                 Id = x.Id,
                 CategoryName = x.CategoryName,
                 Type = x.Type,
                 IsSynced = true
-            }).ToList() ?? new List<Category>();
+            })
+            .OrderBy(x => x.Id)
+            .ToList() ?? new List<Category>();
         }
 
         public bool UploadCategory(Category category)

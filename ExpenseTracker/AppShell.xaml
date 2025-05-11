@@ -37,7 +37,7 @@
         <ShellContent ContentTemplate="{DataTemplate views:LibraryPage}" />
     </ShellItem>
 
-    <ShellItem Title="Cloud Sync" Route="SyncNowPage" Icon="cloud_sync.png">
+    <ShellItem Title="Manual Cloud Sync" Route="SyncNowPage" Icon="cloud_sync.png">
         <ShellContent ContentTemplate="{DataTemplate views:SyncNowPage}" />
     </ShellItem>
 
