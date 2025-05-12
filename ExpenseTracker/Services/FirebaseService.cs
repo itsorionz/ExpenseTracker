@@ -78,7 +78,7 @@ namespace ExpenseTracker.Services
                 Date = x.Date,
                 Notes = x.Notes,
                 Type = x.Type,
-                IsSynced = true
+                IsSynced = x.IsSynced
             })
             .OrderBy(x => x.Id)
             .ToList() ?? new List<Transaction>();
@@ -96,7 +96,7 @@ namespace ExpenseTracker.Services
 
         public List<Category> GetUnsyncedCategories()
         {
-            var response = _httpClient.GetAsync($"{_baseUrl}categories.json?orderBy=\"IsSynced\"&equalTo=false")
+            var response = _httpClient.GetAsync($"{_baseUrl}category.json?orderBy=\"IsSynced\"&equalTo=false")
                                       .GetAwaiter().GetResult();
             if (!response.IsSuccessStatusCode)
                 return new List<Category>();
@@ -109,7 +109,7 @@ namespace ExpenseTracker.Services
                 Id = x.Id,
                 CategoryName = x.CategoryName,
                 Type = x.Type,
-                IsSynced = true
+                IsSynced = x.IsSynced
             })
             .OrderBy(x => x.Id)
             .ToList() ?? new List<Category>();
@@ -121,7 +121,7 @@ namespace ExpenseTracker.Services
                 return false;
             var json = JsonConvert.SerializeObject(category);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = _httpClient.PutAsync($"{_baseUrl}categories/{category.Id}.json", content)
+            var response = _httpClient.PutAsync($"{_baseUrl}category/{category.Id}.json", content)
                                       .GetAwaiter().GetResult();
             return response.IsSuccessStatusCode;
         }
@@ -130,16 +130,16 @@ namespace ExpenseTracker.Services
         {
             var patch = JsonConvert.SerializeObject(new { IsSynced = true });
             var content = new StringContent(patch, Encoding.UTF8, "application/json");
-            var response = _httpClient.PatchAsync($"{_baseUrl}categories/{id}.json", content)
+            var response = _httpClient.PatchAsync($"{_baseUrl}category/{id}.json", content)
                                       .GetAwaiter().GetResult();
             return response.IsSuccessStatusCode;
         }
 
         public bool ResetFirebase()
         {
-            var response = _httpClient.DeleteAsync($"{_baseUrl}/transactions.json").GetAwaiter().GetResult();
+            var response1 = _httpClient.DeleteAsync($"{_baseUrl}/transactions.json").GetAwaiter().GetResult();
             var response2 = _httpClient.DeleteAsync($"{_baseUrl}/category.json").GetAwaiter().GetResult();
-            return response.IsSuccessStatusCode;
+            return response1.IsSuccessStatusCode && response2.IsSuccessStatusCode;
         }
 
     }

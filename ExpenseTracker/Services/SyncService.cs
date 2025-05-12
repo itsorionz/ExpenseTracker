@@ -16,7 +16,7 @@ namespace ExpenseTracker.Services
 
             _syncTimer = new System.Timers.Timer
             {
-                Interval = 2 * 60 * 1000,
+                Interval = 20 * 60 * 1000,
                 AutoReset = true,
                 Enabled = true
             };
@@ -101,8 +101,8 @@ namespace ExpenseTracker.Services
         public void Sync()
         {
             TransactionSQLiteToFirebase();
-            TransactionFirebaseToSQLite();
             CategorySQLiteToFirebase();
+            TransactionFirebaseToSQLite(); 
             CategoryFirebaseToSQLite();
         }
 
