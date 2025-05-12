@@ -122,7 +122,6 @@
 
         <!-- Layer 1: ActivityIndicator overlay -->
         <Grid IsVisible="{Binding IsBusy}"
-              BackgroundColor="#80000000"
               VerticalOptions="FillAndExpand"
               HorizontalOptions="FillAndExpand">
             <ActivityIndicator IsRunning="{Binding IsBusy}"
