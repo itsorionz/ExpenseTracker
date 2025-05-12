@@ -16,6 +16,8 @@ namespace ExpenseTracker.ViewModels
 
         [ObservableProperty]
         private decimal totalBalance;
+        [ObservableProperty]
+        private bool isBusy;
 
         public HomeViewModel(DatabaseService db)
         {
@@ -26,17 +28,17 @@ namespace ExpenseTracker.ViewModels
         [RelayCommand]
         public async Task RefreshAsync()
         {
-            await LoadTransactions(); 
+            IsBusy = true;
+            await LoadTransactions();
+            IsBusy = false;
         }
 
         public async Task LoadTransactions()
         {
             var data = await _db.GetTransactionsAsync();
             Transactions.Clear();
-
             foreach (var t in data.OrderByDescending(t => t.Date).Take(10))
                 Transactions.Add(t);
-
             TotalBalance = data.Sum(t => t.Type == "Income" ? t.Amount : -t.Amount);
         }
 

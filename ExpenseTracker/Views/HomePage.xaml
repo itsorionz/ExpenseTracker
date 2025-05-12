@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ExpenseTracker.Views.HomePage"
@@ -11,115 +10,127 @@
             <helper:AmountToColorConverter x:Key="AmountToColorConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
-    
-    
+
     <ContentPage.ToolbarItems>
-        <ToolbarItem IconImageSource="refresh_data.png"
-                 Text="Refresh"
-                 Order="Primary"
-                 Priority="1"
-                 Command="{Binding RefreshCommand}" />
+        <ToolbarItem IconImageSource="refresh.png"
+                     Text="Refresh"
+                     Order="Primary"
+                     Priority="0"
+                     Command="{Binding RefreshCommand}" />
     </ContentPage.ToolbarItems>
-    
-    <StackLayout Padding="20">
-        <Label Text="Total Balance:"
-           FontSize="24"
-           HorizontalTextAlignment="Center" />
 
-        <Label FontSize="32"
-           TextColor="{Binding TotalBalance, Converter={StaticResource AmountToColorConverter}}"
-           HorizontalTextAlignment="Center"
-           Text="{Binding TotalBalance, StringFormat='৳ {0:N2}'}" />
+    <Grid>
+        <ScrollView>
+            <StackLayout Padding="20">
+                <Label Text="Total Balance:"
+                       FontSize="24"
+                       HorizontalTextAlignment="Center" />
 
-        <Label Text="Recent Transactions History:"
-           FontSize="15"
-           Margin="0,20,0,10" />
+                <Label FontSize="32"
+                       TextColor="{Binding TotalBalance, Converter={StaticResource AmountToColorConverter}}"
+                       HorizontalTextAlignment="Center"
+                       Text="{Binding TotalBalance, StringFormat='৳ {0:N2}'}" />
 
-        <!-- Header Row -->
-        <Grid Padding="10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="80" />
-                <ColumnDefinition Width="150" />
-                <ColumnDefinition Width="80" />
-            </Grid.ColumnDefinitions>
+                <Label Text="Recent Transactions History:"
+                       FontSize="15"
+                       Margin="0,20,0,10" />
 
-            <Label Text="Date"
-               FontAttributes="Bold"
-               FontSize="16"
-               Grid.Column="0"
-               VerticalOptions="Center" />
+                <!-- Header Row -->
+                <Grid Padding="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="80" />
+                        <ColumnDefinition Width="150" />
+                        <ColumnDefinition Width="80" />
+                    </Grid.ColumnDefinitions>
 
-            <Label Text="Category Name"
-               FontAttributes="Bold"
-               FontSize="16"
-               Grid.Column="1"
-               Grid.ColumnSpan="2"
-               VerticalOptions="Center" />
+                    <Label Text="Date"
+                           FontAttributes="Bold"
+                           FontSize="16"
+                           Grid.Column="0"
+                           VerticalOptions="Center" />
 
-            <Label Text="Amount"
-               FontAttributes="Bold"
-               FontSize="16"
-               Grid.Column="2"
-               VerticalOptions="Center" />
+                    <Label Text="Category Name"
+                           FontAttributes="Bold"
+                           FontSize="16"
+                           Grid.Column="1"
+                           Grid.ColumnSpan="2"
+                           VerticalOptions="Center" />
+
+                    <Label Text="Amount"
+                           FontAttributes="Bold"
+                           FontSize="16"
+                           Grid.Column="2"
+                           VerticalOptions="Center" />
+                </Grid>
+
+                <!-- Transaction List -->
+                <CollectionView ItemsSource="{Binding Transactions}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <SwipeView>
+                                <SwipeView.RightItems>
+                                    <SwipeItems Mode="Reveal">
+                                        <SwipeItem Text="Delete"
+                                                   BackgroundColor="Red"
+                                                   IconImageSource="delete_icon.png"
+                                                   Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DeleteCommand}"
+                                                   CommandParameter="{Binding}" />
+                                        <SwipeItem Text="Update"
+                                                   BackgroundColor="LightBlue"
+                                                   IconImageSource="edit_icon.png"
+                                                   Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.UpdateCommand}"
+                                                   CommandParameter="{Binding}" />
+                                    </SwipeItems>
+                                </SwipeView.RightItems>
+
+                                <Grid Padding="10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="80" />
+                                        <ColumnDefinition Width="150" />
+                                        <ColumnDefinition Width="80" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Label Text="{Binding Date, StringFormat='{0:MMM dd}'}"
+                                           VerticalOptions="Center"
+                                           Grid.Column="0" />
+
+                                    <Label Text="{Binding Category}"
+                                           VerticalOptions="Center"
+                                           Grid.Column="1" />
+
+                                    <Label Text="{Binding Amount, StringFormat='৳ {0:N2}'}"
+                                           VerticalOptions="Center"
+                                           Grid.Column="2"
+                                           TextColor="{Binding Type, Converter={StaticResource TypeToColorConverter}}" />
+                                </Grid>
+                            </SwipeView>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <Button Text="Add Transaction"
+                        Clicked="OnAddClicked"
+                        Margin="0,10,0,0" />
+
+                <Label Text="Developed by: Anamul Haque Sohel"
+                       FontSize="12"
+                       Margin="60,15,60,0"
+                       TextColor="Gray"
+                       HorizontalOptions="Center" />
+            </StackLayout>
+        </ScrollView>
+
+        <!-- Layer 1: ActivityIndicator overlay -->
+        <Grid IsVisible="{Binding IsBusy}"
+              BackgroundColor="#80000000"
+              VerticalOptions="FillAndExpand"
+              HorizontalOptions="FillAndExpand">
+            <ActivityIndicator IsRunning="{Binding IsBusy}"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Center"
+                               Color="White"
+                               WidthRequest="50"
+                               HeightRequest="50" />
         </Grid>
-
-        <!-- Transaction List -->
-        <CollectionView ItemsSource="{Binding Transactions}">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <SwipeView>
-                        <SwipeView.RightItems>
-                            <SwipeItems Mode="Reveal">
-                                <SwipeItem Text="Delete"
-                                       BackgroundColor="Red"
-                                       IconImageSource="delete_icon.png"
-                                       Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DeleteCommand}"
-                                       CommandParameter="{Binding}" />
-                                <SwipeItem Text="Update"
-                                       BackgroundColor="LightBlue"
-                                       IconImageSource="edit_icon.png"
-                                       Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.UpdateCommand}"
-                                       CommandParameter="{Binding}" />
-                            </SwipeItems>
-                        </SwipeView.RightItems>
-
-                        <Grid Padding="10">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="80" />
-                                <ColumnDefinition Width="150" />
-                                <ColumnDefinition Width="80" />
-                            </Grid.ColumnDefinitions>
-
-                            <Label Text="{Binding Date, StringFormat='{0:MMM dd}'}"
-                               VerticalOptions="Center"
-                               Grid.Column="0" />
-
-                            <Label Text="{Binding Category}"
-                               VerticalOptions="Center"
-                               Grid.Column="1" />
-
-                            <Label Text="{Binding Amount, StringFormat='৳ {0:N2}'}"
-                               VerticalOptions="Center"
-                               Grid.Column="2"
-                               TextColor="{Binding Type, Converter={StaticResource TypeToColorConverter}}" />
-                        </Grid>
-                    </SwipeView>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-
-        <Button Text="Add Transaction"
-            Clicked="OnAddClicked"
-            Margin="0,10,0,0" />
-
-        <Label Text="Developed by: Anamul Haque Sohel"
-           FontSize="12"
-           Margin="60,15,60,0"
-           TextColor="Gray"
-           HorizontalOptions="Center" />
-    </StackLayout>
-
-
-
-
+    </Grid>
 </ContentPage>
