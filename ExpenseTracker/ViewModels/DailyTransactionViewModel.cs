@@ -10,23 +10,37 @@ namespace ExpenseTracker.ViewModels
     public partial class DailyTransactionViewModel : ObservableObject
     {
         private readonly DatabaseService _db;
+
         [ObservableProperty] 
         private ObservableCollection<Transaction> filteredTransactions = new();
+        [ObservableProperty]
+        private DateTime selectedDate = DateTime.Today;
+        [ObservableProperty]
+        private decimal totalBalance;
+        
 
         public DailyTransactionViewModel(DatabaseService db)
         {
             _db = db;
+            LoadTransactionsCommand.Execute(selectedDate);
         }
 
         [RelayCommand]
-        public async Task LoadTransactions()
+        public async Task LoadTransactions(DateTime date)
         {
             var all = await _db.GetTransactionsAsync();
             var filtered = all
-                .Where(t => t.Date == DateTime.Today)
+                .Where(t => t.Date == date)
                 .OrderByDescending(t => t.Date)
                 .ToList();
+            
             FilteredTransactions = new ObservableCollection<Transaction>(filtered);
+            TotalBalance = filtered.Sum(t => t.Type == "Income" ? t.Amount : -t.Amount);
+        }
+
+        partial void OnSelectedDateChanged(DateTime value)
+        {
+            LoadTransactionsCommand.Execute(value);
         }
 
         [RelayCommand]

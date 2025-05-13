@@ -18,7 +18,7 @@ public partial class DailyTransactionPage : ContentPage
 
         if (BindingContext is DailyTransactionViewModel vm)
         {
-            vm.LoadTransactions();
+            vm.LoadTransactionsCommand.Execute(vm.SelectedDate);
         }
     }
 }

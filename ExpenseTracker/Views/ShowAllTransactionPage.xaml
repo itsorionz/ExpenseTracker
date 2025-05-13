@@ -8,6 +8,7 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <helper:TypeToColorConverter x:Key="TypeToColorConverter"/>
+            <helper:AmountToColorConverter x:Key="AmountToColorConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -26,8 +27,8 @@
             <DatePicker x:Name="EndDatePicker" WidthRequest="250" Date="{Binding EndDate}" Format="dd-MM-yyyy" />
         </HorizontalStackLayout>
 
-        <Button Text="Apply Filter" Command="{Binding FilterCommand}" Margin="10" />
-        <Button Text="Download PDF" Command="{Binding DownloadPdfCommand}" Margin="10" />
+        <Button Text="Apply Filter" Command="{Binding FilterCommand}" Margin="5" />
+        <Button Text="Download PDF" Command="{Binding DownloadPdfCommand}" Margin="5" />
 
         <Label Text="Transaction List:" WidthRequest="250" FontSize="20"  FontAttributes="Bold" HorizontalTextAlignment="Center"/>
 
@@ -98,7 +99,22 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-    </StackLayout>
+        <BoxView HeightRequest="1"
+            Color="Gray"
+            HorizontalOptions="FillAndExpand"
+            Margin="0,10" />
 
+        <Label HorizontalTextAlignment="Center" FontSize="18">
+            <Label.FormattedText>
+                <FormattedString>
+                    <Span Text="Total Amount:  " />
+                    <Span Text="{Binding TotalBalance, StringFormat='৳ {0:N2}'}"
+                    TextColor="{Binding TotalBalance, Converter={StaticResource AmountToColorConverter}}" />
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
+    </StackLayout>
+    
+    
 
 </ContentPage>

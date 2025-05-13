@@ -15,6 +15,8 @@ namespace ExpenseTracker.ViewModels
         [ObservableProperty] private DateTime startDate = DateTime.Today.AddDays(-30);
         [ObservableProperty] private DateTime endDate = DateTime.Today;
         [ObservableProperty] private ObservableCollection<Transaction> filteredTransactions = new();
+        [ObservableProperty]
+        private decimal totalBalance;
 
         public ShowAllTransactionViewModel(DatabaseService db, PdfService pdfService)
         {
@@ -30,8 +32,8 @@ namespace ExpenseTracker.ViewModels
                 .Where(t => t.Date >= StartDate && t.Date <= EndDate)
                 .OrderByDescending(t => t.Date)
                 .ToList();
-
             FilteredTransactions = new ObservableCollection<Transaction>(filtered);
+            TotalBalance = filtered.Sum(t => t.Type == "Income" ? t.Amount : -t.Amount);
         }
 
         [RelayCommand]
