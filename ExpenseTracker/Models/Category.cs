@@ -1,13 +1,14 @@
-﻿using SQLite;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using Newtonsoft.Json;
+using SQLite;
 
 namespace ExpenseTracker.Models
 {
-    public class Category
+    public class Category : Base
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
-        [NotMapped]
+        [Ignore]
+        [JsonIgnore]
         public int Sl { get; set; }
         public string Type { get; set; } 
         public string CategoryName { get; set; }

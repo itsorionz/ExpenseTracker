@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using ExpenseTracker.Services;
 using ExpenseTracker.Models;
+using ExpenseTracker.Views;
 
 public partial class AddTransactionViewModel : ObservableObject
 {
@@ -57,13 +58,16 @@ public partial class AddTransactionViewModel : ObservableObject
             Category = SelectedCategory.CategoryName,
             Amount = Amount,
             Date = Date,
-            Notes = Notes
+            Notes = Notes,
+            CreatedBy = "User",
+            CreatedDate = DateTime.Now,
+            IsSynced = false,
         };
         if (transaction.Id > 0)
             await _db.UpdateTransactionAsync(transaction);
         else
             await _db.SaveTransactionAsync(transaction);
 
-        await Shell.Current.GoToAsync("..");
+        await Shell.Current.GoToAsync(nameof(HomePage));
     }
 }

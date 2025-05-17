@@ -9,5 +9,15 @@ namespace ExpenseTracker.Views
             InitializeComponent();
             BindingContext = viewModel;
         }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            if (BindingContext is ShowAllTransactionViewModel vm)
+            {
+                vm.FilterCommand.Execute(null);
+            }
+        }
     }
 }

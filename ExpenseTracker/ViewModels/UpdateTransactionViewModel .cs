@@ -62,6 +62,9 @@ namespace ExpenseTracker.ViewModels
             Transaction.Amount = Amount;
             Transaction.Date = Date;
             Transaction.Notes = Notes;
+            Transaction.IsSynced = false;
+            Transaction.UpdatedBy = "User";
+            Transaction.UpdatedDate = DateTime.Now;
             await _db.UpdateTransactionAsync(Transaction);
             await Shell.Current.GoToAsync("..");
         }

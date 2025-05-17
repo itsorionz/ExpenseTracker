@@ -49,7 +49,9 @@ public partial class AddCategoryViewModel : ObservableObject
         var newCategory = new Category
         {
             Type = SelectedType,
-            CategoryName = CategoryName.Trim()
+            CategoryName = CategoryName.Trim(),
+            CreatedBy = "User",
+            CreatedDate = DateTime.Now
         };
         await _db.SaveCategoryAsync(newCategory);
         await Shell.Current.DisplayAlert("Success", "Category saved successfully.", "OK");
@@ -62,7 +64,10 @@ public partial class AddCategoryViewModel : ObservableObject
     public async Task Delete(Category category)
     {
         if (category == null) return;
-        await _db.DeleteCategoryAsync(category);
+        category.IsDeleted = true;
+        category.DeletedBy = "User";
+        category.DeletedDate = DateTime.Now;
+        await _db.UpdateCategoryAsync(category);
         Categories.Remove(category);
         await LoadCategories();
     }

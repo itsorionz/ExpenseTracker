@@ -96,7 +96,7 @@
         <Label HorizontalTextAlignment="Center" FontSize="18">
             <Label.FormattedText>
                 <FormattedString>
-                    <Span Text="Total Amount:" />
+                    <Span Text="Total Amount: " />
                     <Span Text="{Binding TotalBalance, StringFormat='৳ {0:N2}'}"
                   TextColor="{Binding TotalBalance, Converter={StaticResource AmountToColorConverter}}" />
                 </FormattedString>

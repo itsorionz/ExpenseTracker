@@ -53,6 +53,9 @@ namespace ExpenseTracker.ViewModels
                 return;
             Category.Type = SelectedType;
             Category.CategoryName = CategoryName;
+            Category.IsSynced = false;
+            Category.UpdatedBy = "User";
+            Category.UpdatedDate = DateTime.Now;
             await _db.UpdateCategoryAsync(Category);
             await Shell.Current.GoToAsync("..");
         }

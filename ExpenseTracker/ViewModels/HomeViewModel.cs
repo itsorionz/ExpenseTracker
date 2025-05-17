@@ -46,7 +46,11 @@ namespace ExpenseTracker.ViewModels
         public async Task Delete(Transaction transaction)
         {
             if (transaction == null) return;
-            await _db.DeleteTransactionAsync(transaction);
+            transaction.IsDeleted = true;
+            transaction.DeletedBy = "User";
+            transaction.DeletedDate = DateTime.Now;
+            transaction.IsSynced = false;
+            await _db.UpdateTransactionAsync(transaction);
             Transactions.Remove(transaction);
             TotalBalance = Transactions.Sum(t => t.Type == "Income" ? t.Amount : -t.Amount);
         }

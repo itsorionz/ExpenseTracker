@@ -28,7 +28,7 @@ namespace ExpenseTracker.Services
 
         public Task<List<Transaction>> GetTransactionsAsync()
         {
-            return _database.Table<Transaction>().OrderByDescending(t => t.Date).ToListAsync();
+            return _database.Table<Transaction>().Where(t => !t.IsDeleted).OrderByDescending(t => t.Date ).ToListAsync();
         }
 
         public Task<int> SaveTransactionAsync(Transaction transaction)
@@ -52,7 +52,7 @@ namespace ExpenseTracker.Services
         }
         public Task<List<Category>> GetCategoryAsync()
         {
-            return _database.Table<Category>().ToListAsync();
+            return _database.Table<Category>().Where(t => !t.IsDeleted).ToListAsync();
         }
 
         public Task<int> SaveCategoryAsync(Category category)
