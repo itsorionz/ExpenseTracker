@@ -21,8 +21,6 @@ namespace ExpenseTracker.Services
             CategorySQLiteToFirebase();
             TransactionFirebaseToSQLite();
             CategoryFirebaseToSQLite();
-            var toast = Toast.Make("Sync completed", ToastDuration.Short, 14);
-            toast.Show();
         }
 
         public void TransactionSQLiteToFirebase()
@@ -79,15 +77,11 @@ namespace ExpenseTracker.Services
         public void ResetFirebase()
         {
             _firebaseService.ResetFirebase();
-            var toast = Toast.Make("Reset Firebase Successfully", ToastDuration.Short, 14);
-            toast.Show();
         }
 
         public void ResetSQLite()
         {
             _databaseService.ResetDatabase();
-            var toast = Toast.Make("Reset Local Successfully", ToastDuration.Short, 14);
-            toast.Show();
         }
 
     }

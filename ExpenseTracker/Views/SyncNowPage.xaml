@@ -5,32 +5,37 @@
              Title="Cloud Sync Page">
 
     <ContentPage.Content>
-        <!-- Main Content Stack -->
         <Grid>
-            <StackLayout Padding="20" Spacing="10">
-                <Label Text="Sync Now" 
-                       FontAttributes="Bold"
-                       FontSize="16"
-                       Padding="5"/>
-                <Button Text="Sync Now" Command="{Binding StartSyncCommand}" />
+            <ScrollView>
+                <!-- Main Content Stack -->
+                <StackLayout Padding="20" Spacing="10">
+                    <Label Text="Sync Now" 
+                           FontAttributes="Bold"
+                           FontSize="16"
+                           Padding="5"/>
+                    <Button Text="Sync Now" Command="{Binding StartSyncCommand}" />
 
-                <Label Text="Reset Local Database" 
-                       FontAttributes="Bold"
-                       FontSize="16"
-                       Padding="5"/>
-                <Button Text="Reset Local DB" Command="{Binding ResetLocalDatabaseCommand}" />
+                    <Label Text="Reset Local Database" 
+                           FontAttributes="Bold"
+                           FontSize="16"
+                           Padding="5"/>
+                    <Button Text="Reset Local DB" Command="{Binding ResetLocalDatabaseCommand}" />
 
-                <Label Text="Reset Cloud Database" 
-                       FontAttributes="Bold"
-                       FontSize="16"
-                       Padding="5"/>
-                <Button Text="Reset Cloud DB" Command="{Binding ReseCloudDatabaseCommand}" />
-            </StackLayout>
+                    <Label Text="Reset Cloud Database" 
+                           FontAttributes="Bold"
+                           FontSize="16"
+                           Padding="5"/>
+                    <Button Text="Reset Cloud DB" Command="{Binding ResetCloudDatabaseCommand}" />
+                </StackLayout>
+            </ScrollView>
 
             <!-- Layer 1: ActivityIndicator overlay -->
             <Grid IsVisible="{Binding IsBusy}"
+                  BackgroundColor="#80000000"
                   VerticalOptions="FillAndExpand"
-                  HorizontalOptions="FillAndExpand">
+                  HorizontalOptions="FillAndExpand"
+                  ZIndex="1">
+                <!-- Ensure it sits above other elements -->
                 <ActivityIndicator IsRunning="{Binding IsBusy}"
                                    VerticalOptions="Center"
                                    HorizontalOptions="Center"

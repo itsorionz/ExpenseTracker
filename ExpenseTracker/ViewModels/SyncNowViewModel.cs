@@ -1,3 +1,5 @@
+using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using ExpenseTracker.Services;
@@ -15,26 +17,56 @@ public partial class SyncNowViewModel : ObservableObject
     }
 
     [RelayCommand]
-    public void StartSync()
+    public async Task StartSync()
     {
-        IsBusy = true;
-        _syncNowService.Sync();
-        IsBusy = false;
+        try
+        {
+            IsBusy = true;
+            await Task.Run(() => _syncNowService.Sync());
+            await MainThread.InvokeOnMainThreadAsync(async () =>
+            {
+                await Toast.Make("Sync completed", ToastDuration.Short, 14).Show();
+            });
+        }
+        finally
+        {
+            IsBusy = false;
+        }
     }
 
     [RelayCommand]
-    public void ResetLocalDatabase()
+    public async Task ResetLocalDatabase()
     {
-        IsBusy = true;
-        _syncNowService.ResetSQLite();
-        IsBusy = false;
+        try
+        {
+            IsBusy = true;
+            await Task.Run(() => _syncNowService.ResetSQLite());
+            await MainThread.InvokeOnMainThreadAsync(async () =>
+            {
+                await Toast.Make("Reset Local Successfully", ToastDuration.Short, 14).Show();
+            });
+        }
+        finally 
+        {
+            IsBusy = false;
+        }        
     }
 
     [RelayCommand]
-    public void ReseCloudDatabase()
+    public async Task ResetCloudDatabase()
     {
-        IsBusy = true;
-        _syncNowService.ResetFirebase();
-        IsBusy = false;
+        try
+        {
+            IsBusy = true;
+            await Task.Run(() => _syncNowService.ResetFirebase());
+            await MainThread.InvokeOnMainThreadAsync(async () =>
+            {
+                await Toast.Make("Reset Firebase Successfully", ToastDuration.Short, 14).Show();
+            });
+        }
+        finally
+        {
+            IsBusy = false;
+        }
     }
 }
