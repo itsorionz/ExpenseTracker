@@ -25,7 +25,7 @@ public partial class SyncNowViewModel : ObservableObject
             await Task.Run(() => _syncNowService.Sync());
             await MainThread.InvokeOnMainThreadAsync(async () =>
             {
-                await Toast.Make("Sync completed", ToastDuration.Short, 14).Show();
+                await Toast.Make("Data Sync completed", ToastDuration.Short, 14).Show();
             });
         }
         finally
@@ -35,15 +35,33 @@ public partial class SyncNowViewModel : ObservableObject
     }
 
     [RelayCommand]
-    public async Task ResetLocalDatabase()
+    public async Task ResetLocalLibrary()
     {
         try
         {
             IsBusy = true;
-            await Task.Run(() => _syncNowService.ResetSQLite());
+            await Task.Run(() => _syncNowService.ResetLocalLibrary());
             await MainThread.InvokeOnMainThreadAsync(async () =>
             {
-                await Toast.Make("Reset Local Successfully", ToastDuration.Short, 14).Show();
+                await Toast.Make("Reset Local Library Successfully", ToastDuration.Short, 14).Show();
+            });
+        }
+        finally
+        {
+            IsBusy = false;
+        }
+    }
+
+    [RelayCommand]
+    public async Task ResetLocalTrasaction()
+    {
+        try
+        {
+            IsBusy = true;
+            await Task.Run(() => _syncNowService.ResetLocalTransaction());
+            await MainThread.InvokeOnMainThreadAsync(async () =>
+            {
+                await Toast.Make("Reset Local Transaction Successfully", ToastDuration.Short, 14).Show();
             });
         }
         finally 
@@ -53,15 +71,15 @@ public partial class SyncNowViewModel : ObservableObject
     }
 
     [RelayCommand]
-    public async Task ResetCloudDatabase()
+    public async Task ResetFirebaseLibrary()
     {
         try
         {
             IsBusy = true;
-            await Task.Run(() => _syncNowService.ResetFirebase());
+            await Task.Run(() => _syncNowService.ResetFirebaseLibrary());
             await MainThread.InvokeOnMainThreadAsync(async () =>
             {
-                await Toast.Make("Reset Firebase Successfully", ToastDuration.Short, 14).Show();
+                await Toast.Make("Reset Cloud Library Successfully", ToastDuration.Short, 14).Show();
             });
         }
         finally
@@ -69,4 +87,24 @@ public partial class SyncNowViewModel : ObservableObject
             IsBusy = false;
         }
     }
+
+    [RelayCommand]
+    public async Task ResetFirebaseTransaction()
+    {
+        try
+        {
+            IsBusy = true;
+            await Task.Run(() => _syncNowService.ResetFirebaseTransaction());
+            await MainThread.InvokeOnMainThreadAsync(async () =>
+            {
+                await Toast.Make("Reset Cloud Transaction Successfully", ToastDuration.Short, 14).Show();
+            });
+        }
+        finally
+        {
+            IsBusy = false;
+        }
+    }
+
+   
 }

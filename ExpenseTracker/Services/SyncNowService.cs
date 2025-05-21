@@ -74,14 +74,21 @@ namespace ExpenseTracker.Services
             }
         }
 
-        public void ResetFirebase()
+        public void ResetFirebaseTransaction()
         {
-            _firebaseService.ResetFirebase();
+            _firebaseService.ResetTransaction();
         }
-
-        public void ResetSQLite()
+        public void ResetFirebaseLibrary()
         {
-            _databaseService.ResetDatabase();
+            _firebaseService.ResetLibrary();
+        }
+        public void ResetLocalTransaction()
+        {
+            _databaseService.ResetTransaction();
+        }
+        public void ResetLocalLibrary()
+        {
+            _databaseService.ResetLibrary();
         }
 
     }

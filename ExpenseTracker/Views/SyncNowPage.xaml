@@ -9,23 +9,35 @@
             <ScrollView>
                 <!-- Main Content Stack -->
                 <StackLayout Padding="20" Spacing="10">
-                    <Label Text="Sync Now" 
+                    <Label Text="Data Sync Now" 
                            FontAttributes="Bold"
                            FontSize="16"
                            Padding="5"/>
-                    <Button Text="Sync Now" Command="{Binding StartSyncCommand}" />
+                    <Button Text="Data Sync Now" Command="{Binding StartSyncCommand}" />
+                    
+                    <Label Text="Reset Local Library" 
+                           FontAttributes="Bold"
+                           FontSize="16"
+                           Padding="5"/>
+                    <Button Text="Reset Local Library" Command="{Binding ResetLocalLibraryCommand}" />
 
-                    <Label Text="Reset Local Database" 
+                    <Label Text="Reset Local Transaction" 
                            FontAttributes="Bold"
                            FontSize="16"
                            Padding="5"/>
-                    <Button Text="Reset Local DB" Command="{Binding ResetLocalDatabaseCommand}" />
+                    <Button Text="Reset Local Transaction" Command="{Binding ResetLocalTrasactionCommand}" />
 
-                    <Label Text="Reset Cloud Database" 
+                    <Label Text="Reset Cloud Library" 
                            FontAttributes="Bold"
                            FontSize="16"
                            Padding="5"/>
-                    <Button Text="Reset Cloud DB" Command="{Binding ResetCloudDatabaseCommand}" />
+                    <Button Text="Reset Cloud Library" Command="{Binding ResetFirebaseLibraryCommand}" />
+
+                    <Label Text="Reset Cloud Transaction" 
+                           FontAttributes="Bold"
+                           FontSize="16"
+                           Padding="5"/>
+                    <Button Text="Reset Cloud Transaction" Command="{Binding ResetFirebaseTransactionCommand}" />
                 </StackLayout>
             </ScrollView>
 

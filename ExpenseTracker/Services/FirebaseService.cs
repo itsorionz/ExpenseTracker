@@ -135,11 +135,15 @@ namespace ExpenseTracker.Services
             return response.IsSuccessStatusCode;
         }
 
-        public bool ResetFirebase()
+        public bool ResetTransaction()
         {
-            var response1 = _httpClient.DeleteAsync($"{_baseUrl}/transactions.json").GetAwaiter().GetResult();
-            var response2 = _httpClient.DeleteAsync($"{_baseUrl}/category.json").GetAwaiter().GetResult();
-            return response1.IsSuccessStatusCode && response2.IsSuccessStatusCode;
+            var response = _httpClient.DeleteAsync($"{_baseUrl}/transactions.json").GetAwaiter().GetResult();
+            return response.IsSuccessStatusCode;
+        }
+        public bool ResetLibrary()
+        {
+            var response = _httpClient.DeleteAsync($"{_baseUrl}/category.json").GetAwaiter().GetResult();
+            return response.IsSuccessStatusCode;
         }
 
     }

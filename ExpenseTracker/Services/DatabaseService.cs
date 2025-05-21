@@ -76,11 +76,14 @@ namespace ExpenseTracker.Services
             await _database.DropTableAsync<Category>();
             await _database.CreateTableAsync<Category>();
         }
-        public void ResetDatabase()
+        public void ResetTransaction()
         {
             _database.DropTableAsync<Transaction>().Wait();
-            _database.DropTableAsync<Category>().Wait();
             _database.CreateTableAsync<Transaction>().Wait();
+        }
+        public void ResetLibrary()
+        {
+            _database.DropTableAsync<Category>().Wait();
             _database.CreateTableAsync<Category>().Wait();
         }
     }
