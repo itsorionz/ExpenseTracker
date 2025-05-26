@@ -12,8 +12,10 @@
                 ItemsSource="{x:Static helper:Constants.TransactionTypes}"
                 SelectedItem="{Binding SelectedType}" />
 
-        <Entry Placeholder="Category"
-               Text="{Binding Category}" />
+        <Picker Title="Category"
+            ItemsSource="{Binding Categories}"
+            ItemDisplayBinding="{Binding CategoryName}"
+            SelectedItem="{Binding SelectedCategory}" />
 
         <Entry Placeholder="Amount"
                Text="{Binding Amount}"

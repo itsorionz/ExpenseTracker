@@ -29,7 +29,7 @@ public partial class AddTransactionViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private async void LoadCategoriesByType()
+    public async void LoadCategoriesByType()
     {
         var allCategories = await _db.GetCategoryAsync();
         var filtered = allCategories

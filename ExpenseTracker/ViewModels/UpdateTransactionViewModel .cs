@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using ExpenseTracker.Models;
 using ExpenseTracker.Services;
+using System.Collections.ObjectModel;
 
 namespace ExpenseTracker.ViewModels
 {
@@ -15,38 +16,64 @@ namespace ExpenseTracker.ViewModels
             _db = db;
         }
 
-        private Transaction transaction;
+        [ObservableProperty]
+        public ObservableCollection<Category> categories = new();
+
+        [ObservableProperty]
+        private string selectedType;
+
+        [ObservableProperty]
+        private Category selectedCategory;
+
+        [ObservableProperty]
+        private decimal amount;
+
+        [ObservableProperty]
+        private DateTime date;
+
+        [ObservableProperty]
+        private string notes;
+
+        private Transaction _transaction;
 
         public Transaction Transaction
         {
-            get => transaction;
+            get => _transaction;
             set
             {
-                transaction = value;
-                if (transaction != null)
+                _transaction = value;
+                if (_transaction != null)
                 {
-                    SelectedType = transaction.Type;
-                    Category = transaction.Category;
-                    Amount = transaction.Amount;
-                    Date = transaction.Date;
-                    Notes = transaction.Notes;
+                    LoadTransaction(_transaction);
                 }
             }
         }
 
-        [ObservableProperty] private string selectedType;
-        [ObservableProperty] private string category;
-        [ObservableProperty] private decimal amount;
-        [ObservableProperty] private DateTime date;
-        [ObservableProperty] private string notes;
-
-        private Transaction _originalTransaction;
-
-        public void LoadTransaction(Transaction transaction)
+        partial void OnSelectedTypeChanged(string value)
         {
-            _originalTransaction = transaction;
+            LoadCategoriesByType();
+        }
+
+        [RelayCommand]
+        public async Task LoadCategoriesByType()
+        {
+            var allCategories = await _db.GetCategoryAsync();
+            var filtered = allCategories
+                .Where(c => c.Type == SelectedType)
+                .OrderBy(c => c.Id)
+                .ToList();
+
+            Categories.Clear();
+            foreach (var cat in filtered)
+                Categories.Add(cat);
+            SelectedCategory = Categories.FirstOrDefault();
+        }
+
+        public async void LoadTransaction(Transaction transaction)
+        {
             SelectedType = transaction.Type;
-            Category = transaction.Category;
+            await LoadCategoriesByType();
+            SelectedCategory = Categories.FirstOrDefault(c => c.CategoryName == transaction.Category);
             Amount = transaction.Amount;
             Date = transaction.Date;
             Notes = transaction.Notes;
@@ -55,17 +82,19 @@ namespace ExpenseTracker.ViewModels
         [RelayCommand]
         public async Task Save()
         {
-            if (string.IsNullOrWhiteSpace(SelectedType) || Amount <= 0)
+            if (string.IsNullOrWhiteSpace(SelectedType) || Amount <= 0 || SelectedCategory == null)
                 return;
-            Transaction.Type = SelectedType;
-            Transaction.Category = Category;
-            Transaction.Amount = Amount;
-            Transaction.Date = Date;
-            Transaction.Notes = Notes;
-            Transaction.IsSynced = false;
-            Transaction.UpdatedBy = "User";
-            Transaction.UpdatedDate = DateTime.Now;
-            await _db.UpdateTransactionAsync(Transaction);
+
+            _transaction.Type = SelectedType;
+            _transaction.Category = SelectedCategory.CategoryName;
+            _transaction.Amount = Amount;
+            _transaction.Date = Date;
+            _transaction.Notes = Notes;
+            _transaction.IsSynced = false;
+            _transaction.UpdatedBy = "User";
+            _transaction.UpdatedDate = DateTime.Now;
+
+            await _db.UpdateTransactionAsync(_transaction);
             await Shell.Current.GoToAsync("..");
         }
     }
