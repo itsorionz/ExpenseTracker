@@ -32,6 +32,7 @@ namespace ExpenseTracker.ViewModels
             var filtered = all
                 .Where(t => t.Date == date)
                 .OrderByDescending(t => t.Date)
+                .ThenByDescending(t => t.CreatedDate)
                 .ToList();
             
             FilteredTransactions = new ObservableCollection<Transaction>(filtered);

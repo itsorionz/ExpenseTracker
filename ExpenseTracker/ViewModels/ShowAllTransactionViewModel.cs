@@ -31,6 +31,7 @@ namespace ExpenseTracker.ViewModels
             var filtered = all
                 .Where(t => t.Date >= StartDate && t.Date <= EndDate)
                 .OrderByDescending(t => t.Date)
+                .ThenByDescending(t => t.CreatedDate)
                 .ToList();
             FilteredTransactions = new ObservableCollection<Transaction>(filtered);
             TotalBalance = filtered.Sum(t => t.Type == "Income" ? t.Amount : -t.Amount);

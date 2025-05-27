@@ -67,7 +67,7 @@ public partial class AddTransactionViewModel : ObservableObject
             await _db.UpdateTransactionAsync(transaction);
         else
             await _db.SaveTransactionAsync(transaction);
-
-        await Shell.Current.GoToAsync(nameof(HomePage));
+        await Shell.Current.GoToAsync($"//{nameof(HomePage)}");
+        //await Shell.Current.GoToAsync(nameof(HomePage));
     }
 }

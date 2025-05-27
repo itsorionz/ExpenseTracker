@@ -28,7 +28,7 @@ namespace ExpenseTracker.Services
 
         public Task<List<Transaction>> GetTransactionsAsync()
         {
-            return _database.Table<Transaction>().Where(t => !t.IsDeleted).OrderByDescending(t => t.Date ).ToListAsync();
+            return _database.Table<Transaction>().Where(t => !t.IsDeleted).ToListAsync();
         }
 
         public Task<int> SaveTransactionAsync(Transaction transaction)
