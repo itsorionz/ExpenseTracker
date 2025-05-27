@@ -81,7 +81,7 @@ namespace ExpenseTracker.ViewModels
                 entries.Add(new ChartEntry((float)item.Total)
                 {
                     Label = item.Date.ToString("dd"),
-                    ValueLabel = $"{item.Total:N0}",
+                    ValueLabel = $"৳ {item.Total:N0}",
                     Color = item.Total >= 0 ? SKColor.Parse("#4caf50") : SKColor.Parse("#f44336")
                 });
             }
@@ -89,7 +89,7 @@ namespace ExpenseTracker.ViewModels
             Chart = new BarChart
             {
                 Entries = entries,
-                LabelTextSize = 30,
+                LabelTextSize = 16,
                 Margin = 20,
                 ValueLabelOrientation = Orientation.Vertical,
                 LabelOrientation = Orientation.Vertical,
