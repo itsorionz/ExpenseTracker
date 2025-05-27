@@ -80,8 +80,8 @@ namespace ExpenseTracker.ViewModels
             {
                 entries.Add(new ChartEntry((float)item.Total)
                 {
-                    Label = item.Date.ToString("dd MMM"),
-                    ValueLabel = $"৳ {item.Total:N0}",
+                    Label = item.Date.ToString("dd"),
+                    ValueLabel = $"{item.Total:N0}",
                     Color = item.Total >= 0 ? SKColor.Parse("#4caf50") : SKColor.Parse("#f44336")
                 });
             }
@@ -91,11 +91,26 @@ namespace ExpenseTracker.ViewModels
                 Entries = entries,
                 LabelTextSize = 30,
                 Margin = 20,
-                ValueLabelOrientation = Orientation.Horizontal,
-                LabelOrientation = Orientation.Horizontal,
+                ValueLabelOrientation = Orientation.Vertical,
+                LabelOrientation = Orientation.Vertical,
                 MaxValue = grouped.Any() ? (float)(Convert.ToDouble(grouped.Max(x => x.Total)) * 1.1) : 0,
                 MinValue = grouped.Any() ? (float)(Convert.ToDouble(grouped.Min(x => x.Total)) * 1.1) : 0
             };
+
+            //Chart = new LineChart
+            //{
+            //    Entries = entries,
+            //    LabelTextSize = 30,
+            //    LineMode = LineMode.Straight,
+            //    LineSize = 8,
+            //    PointMode = PointMode.Circle,
+            //    PointSize = 10,
+            //    Margin = 20,
+            //    ValueLabelOrientation = Orientation.Horizontal,
+            //    LabelOrientation = Orientation.Horizontal,
+            //    MaxValue = (float)(Convert.ToDouble(entries.Max(e => e.Value)) * 1.1f),
+            //    MinValue = (float)(Convert.ToDouble(entries.Min(e => e.Value)) * 1.1f)
+            //};
         }
     }
 }
