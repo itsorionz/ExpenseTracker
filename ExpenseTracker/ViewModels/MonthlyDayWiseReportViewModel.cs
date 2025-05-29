@@ -112,5 +112,92 @@ namespace ExpenseTracker.ViewModels
             //    MinValue = (float)(Convert.ToDouble(entries.Min(e => e.Value)) * 1.1f)
             //};
         }
+
+        public async Task LoadMonthlyDateWisePieChartAsync()
+        {
+            var transactions = await _db.GetTransactionsAsync();
+
+            var now = DateTime.Now;
+            var monthlyTransactions = transactions
+                .Where(t => t.Date.Month == now.Month && t.Date.Year == now.Year)
+                .ToList();
+
+            var dates = transactions
+                        .Where(d => d.Date.Month == now.Month && d.Date.Year == now.Year)
+                        .Select(d => d.Date.Date).Distinct().ToList();
+
+            int totalDates = dates.Count;
+
+            var dateColorMap = dates
+                .Select((Date, index) => new
+                {
+                    Date = Date,
+                    Color = GenerateColorFromIndex(index, totalDates)
+                })
+                .ToDictionary(x => x.Date, x => x.Color);
+
+
+            var grouped = dates
+                .Select(dat => new
+                {
+                    Date = dat,
+                    Total = monthlyTransactions
+                        .Where(t => t.Date == dat)
+                        .Sum(t => t.Type == "Income" ? t.Amount : -t.Amount)
+                })
+                .Where(x => x.Total != 0)
+                .ToList();
+
+            var entries = new List<ChartEntry>();
+
+            foreach (var item in grouped)
+            {
+                var colorHex = dateColorMap.ContainsKey(item.Date) ? dateColorMap[item.Date] : "#cccccc";
+
+                entries.Add(new ChartEntry((float)Math.Abs(item.Total))
+                {
+                    Label = item.Date.ToString("dd-MM-yyyy"),
+                    ValueLabel = $"৳ {item.Total:N0}",
+                    Color = SKColor.Parse(colorHex),
+                    TextColor = SKColors.Black
+                });
+            }
+
+            Chart = new PieChart
+            {
+                Entries = entries,
+                LabelTextSize = 20,
+                BackgroundColor = SKColors.Transparent,
+                HoleRadius = 0.3f
+            };
+        }
+
+
+        public string GenerateColorFromIndex(int index, int total)
+        {
+            double hue = (360.0 / total) * index;
+            return HslToHex(hue, 0.6, 0.6);
+        }
+
+        public string HslToHex(double h, double s, double l)
+        {
+            double c = (1 - Math.Abs(2 * l - 1)) * s;
+            double x = c * (1 - Math.Abs((h / 60) % 2 - 1));
+            double m = l - c / 2;
+            double r = 0, g = 0, b = 0;
+
+            if (h < 60) { r = c; g = x; b = 0; }
+            else if (h < 120) { r = x; g = c; b = 0; }
+            else if (h < 180) { r = 0; g = c; b = x; }
+            else if (h < 240) { r = 0; g = x; b = c; }
+            else if (h < 300) { r = x; g = 0; b = c; }
+            else { r = c; g = 0; b = x; }
+
+            int r255 = (int)((r + m) * 255);
+            int g255 = (int)((g + m) * 255);
+            int b255 = (int)((b + m) * 255);
+
+            return $"#{r255:X2}{g255:X2}{b255:X2}";
+        }
     }
 }

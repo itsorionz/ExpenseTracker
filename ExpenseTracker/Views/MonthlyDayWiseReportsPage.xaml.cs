@@ -20,7 +20,8 @@ namespace ExpenseTracker.Views
 
             if (BindingContext is MonthlyDayWiseReportViewModel vm)
             {
-               await vm.LoadDailyChartAsync();
+                //await vm.LoadDailyChartAsync();
+                await vm.LoadMonthlyDateWisePieChartAsync();
             }
         }
     }
