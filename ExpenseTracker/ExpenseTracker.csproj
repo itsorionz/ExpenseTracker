@@ -90,6 +90,9 @@
 	  <Compile Update="Views\AddCategoryPage.xaml.cs">
 	    <DependentUpon>AddCategoryPage.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Views\TotalBalancePage.xaml.cs">
+	    <DependentUpon>TotalBalancePage.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\LibraryPage.xaml.cs">
 	    <DependentUpon>LibraryPage.xaml</DependentUpon>
 	  </Compile>
@@ -121,6 +124,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\ExpenseAssumptionPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\TotalBalancePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\HomePage.xaml">

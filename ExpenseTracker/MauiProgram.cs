@@ -36,6 +36,8 @@ namespace ExpenseTracker
 
             builder.Services.AddTransient<HomePage>();
             builder.Services.AddTransient<HomeViewModel>();
+            builder.Services.AddTransient<TotalBalancePage>();
+            builder.Services.AddTransient<TotalBalanceModel>();
             builder.Services.AddTransient<LibraryPage>();
             builder.Services.AddTransient<LibraryViewModel>();
             builder.Services.AddTransient<AddCategoryPage>();

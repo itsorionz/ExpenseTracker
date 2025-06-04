@@ -7,7 +7,7 @@ using System.Collections.ObjectModel;
 
 namespace ExpenseTracker.ViewModels
 {
-    public partial class HomeViewModel : ObservableObject
+    public partial class TotalBalanceModel : ObservableObject
     {
         private readonly DatabaseService _db;
 
@@ -19,7 +19,7 @@ namespace ExpenseTracker.ViewModels
         [ObservableProperty]
         private bool isBusy;
 
-        public HomeViewModel(DatabaseService db)
+        public TotalBalanceModel(DatabaseService db)
         {
             _db = db;
             transactions = new ObservableCollection<Transaction>();
@@ -39,7 +39,7 @@ namespace ExpenseTracker.ViewModels
             Transactions.Clear();
             foreach (var t in data.OrderByDescending(t => t.Date).ThenByDescending(t => t.CreatedDate).Take(10))
                 Transactions.Add(t);
-            TotalBalance = data.Where(d => d.Date.Month == DateTime.Now.Month).Sum(t => t.Type == "Income" ? t.Amount : -t.Amount);
+            TotalBalance = data.Sum(t => t.Type == "Income" ? t.Amount : -t.Amount);
         }
 
         [RelayCommand]

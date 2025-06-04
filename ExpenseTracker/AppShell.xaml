@@ -9,6 +9,10 @@
         <ShellContent ContentTemplate="{DataTemplate views:HomePage}" />
     </ShellItem>
 
+    <ShellItem Title="Total Balance" Route="TotalBalancePage" Icon="money_received.png">
+        <ShellContent ContentTemplate="{DataTemplate views:TotalBalancePage}" />
+    </ShellItem>
+
     <ShellItem Title="Add Transaction" Route="AddTransactionPage" Icon="add.png">
         <ShellContent ContentTemplate="{DataTemplate views:AddTransactionPage}" />
     </ShellItem>
