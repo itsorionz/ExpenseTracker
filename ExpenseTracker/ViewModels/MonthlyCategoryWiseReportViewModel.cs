@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using ExpenseTracker.Services;
 using Microcharts;
 using SkiaSharp;
@@ -10,13 +11,17 @@ namespace ExpenseTracker.ViewModels
         private readonly DatabaseService _db;
 
         [ObservableProperty]
+        private DateTime selectedMonth = DateTime.Today;
+        [ObservableProperty]
         private Chart chart;
 
         public MonthlyCategoryWiseReportViewModel(DatabaseService db)
         {
             _db = db;
+            LoadMonthlyCategoryPieChartAsync(selectedMonth);
         }
 
+        [RelayCommand]
         public async Task LoadCategoryBarChartAsync()
         {
             var transactions = await _db.GetTransactionsAsync();
@@ -54,14 +59,14 @@ namespace ExpenseTracker.ViewModels
                 MinValue = grouped.Any() ? (float)(Convert.ToDouble(grouped.Min(x => x.Total)) * 1.1) : 0
             };
         }
-        
-        public async Task LoadMonthlyCategoryPieChartAsync()
+
+        [RelayCommand]
+        public async Task LoadMonthlyCategoryPieChartAsync(DateTime month)
         {
             var transactions = await _db.GetTransactionsAsync();
 
-            var now = DateTime.Now;
             var monthlyTransactions = transactions
-                .Where(t => t.Date.Month == now.Month && t.Date.Year == now.Year)
+                .Where(t => t.Date.Month == month.Month && t.Date.Year == month.Year)
                 .ToList();
 
             var categories = _db.GetCategoryAsync().Result
@@ -127,6 +132,10 @@ namespace ExpenseTracker.ViewModels
                 BackgroundColor = SKColors.Transparent,
                 HoleRadius = 0.3f
             };
+        }
+        partial void OnSelectedMonthChanged(DateTime value)
+        {
+            LoadMonthlyCategoryPieChartAsync(value);
         }
 
         // Generate a color based on the index and total number of categories

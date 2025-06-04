@@ -6,6 +6,13 @@
              Title="Monthly Day Wise Report">
 
     <StackLayout Padding="20">
+
+        <HorizontalStackLayout VerticalOptions="Center">
+            <Label Text="Select Month:" FontAttributes="Bold" WidthRequest="100" VerticalTextAlignment="Center"/>
+            <DatePicker x:Name="DateSelector" WidthRequest="250" Date="{Binding SelectedMonth, Mode=TwoWay}" 
+                        Format="MMMM-yyyy" />
+        </HorizontalStackLayout>
+
         <Label Text="Monthly Day Wise Income vs Expense" FontSize="18" VerticalOptions="Center" Margin="20"/>
         <microcharts:ChartView Chart="{Binding Chart}" HeightRequest="400" BackgroundColor="LightGrey" />
     </StackLayout>

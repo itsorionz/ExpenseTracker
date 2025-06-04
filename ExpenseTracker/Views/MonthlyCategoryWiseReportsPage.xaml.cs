@@ -20,7 +20,7 @@ namespace ExpenseTracker.Views
 
             if (BindingContext is MonthlyCategoryWiseReportViewModel vm)
             {
-               await vm.LoadMonthlyCategoryPieChartAsync();
+               await vm.LoadMonthlyCategoryPieChartAsync(vm.SelectedMonth);
             }
         }
     }

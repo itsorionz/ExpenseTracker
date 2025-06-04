@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using ExpenseTracker.Services;
 using Microcharts;
 using SkiaSharp;
@@ -11,13 +12,18 @@ namespace ExpenseTracker.ViewModels
         private readonly DatabaseService _db;
 
         [ObservableProperty]
+        private DateTime selectedMonth = DateTime.Today;
+        [ObservableProperty]
         private Chart chart;
+        partial void OnSelectedDateChanged(DateTime value);
 
         public MonthlyDayWiseReportViewModel(DatabaseService db)
         {
             _db = db;
+            LoadMonthlyDateWisePieChartAsync(selectedMonth);
         }
-
+        
+        [RelayCommand]
         public async Task LoadMonthlyReportAsync()
         {
             var transactions = await _db.GetTransactionsAsync();
@@ -60,7 +66,8 @@ namespace ExpenseTracker.ViewModels
             };
 
         }
-
+        
+        [RelayCommand]
         public async Task LoadDailyChartAsync()
         {
             var transactions = await _db.GetTransactionsAsync();
@@ -112,18 +119,18 @@ namespace ExpenseTracker.ViewModels
             //    MinValue = (float)(Convert.ToDouble(entries.Min(e => e.Value)) * 1.1f)
             //};
         }
-
-        public async Task LoadMonthlyDateWisePieChartAsync()
+        
+        [RelayCommand]
+        public async Task LoadMonthlyDateWisePieChartAsync(DateTime month)
         {
             var transactions = await _db.GetTransactionsAsync();
 
-            var now = DateTime.Now;
             var monthlyTransactions = transactions
-                .Where(t => t.Date.Month == now.Month && t.Date.Year == now.Year)
+                .Where(t => t.Date.Month == month.Month && t.Date.Year == month.Year)
                 .ToList();
 
             var dates = transactions
-                        .Where(d => d.Date.Month == now.Month && d.Date.Year == now.Year)
+                        .Where(d => d.Date.Month == month.Month && d.Date.Year == month.Year)
                         .Select(d => d.Date.Date).Distinct().ToList();
 
             int totalDates = dates.Count;
@@ -172,6 +179,10 @@ namespace ExpenseTracker.ViewModels
             };
         }
 
+        partial void OnSelectedMonthChanged(DateTime value)
+        {
+            LoadMonthlyDateWisePieChartAsync(value);
+        }
 
         public string GenerateColorFromIndex(int index, int total)
         {

@@ -3,9 +3,19 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:microcharts="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
              x:Class="ExpenseTracker.Views.MonthlyCategoryWiseReportsPage"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              Title="Monthly Category Wise Report">
-
+    
     <StackLayout Padding="20">
+
+        <HorizontalStackLayout VerticalOptions="Center">
+            <Label Text="Select Month:" FontAttributes="Bold" WidthRequest="100" VerticalTextAlignment="Center"/>
+            <DatePicker x:Name="DateSelector" WidthRequest="250" Date="{Binding SelectedMonth, Mode=TwoWay}" 
+                Format="MMMM-yyyy" 
+                MaximumDate="{x:Static sys:DateTime.MaxValue}"
+                MinimumDate="{x:Static sys:DateTime.MinValue}"/>
+        </HorizontalStackLayout>
+        
         <Label Text="Monthly Category Wise Report" FontSize="18" HorizontalOptions="Center" Margin="20"/>
         <microcharts:ChartView Chart="{Binding Chart}" HeightRequest="400" BackgroundColor="LightGrey" />
     </StackLayout>
